@@ -1,0 +1,233 @@
+<div class="container">
+  <div class="row">
+
+
+    <div class="col-md-6 mt-3">
+
+
+
+      <form action="/admin/add-product" method="post" id="myform" enctype="multipart/form-data">
+        <p id="existError text-danger"></p>
+        <div class="form-group">
+          <p class="text-danger"></p>
+          <label for="Name">Name</label>
+          <input type="text" name="name" id="name" class="form-control">
+        </div>
+        <div class="form-group">
+
+          <label for="exampleInputName1">catagory</label>
+          <select class="form-control" name="catogory" id="exampleSelectcata">
+            <% cata?.forEach((cata)=>{ %>
+            <option value="<%= cata.name.toUpperCase() %>"><%= cata.name.toUpperCase() %> </option>
+            <% }) %>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <p class="text-danger"></p>
+          <label for="Name">price</label>
+          <input type="tel" id="price" name="price" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <p class="text-danger"></p>
+          <label for="Name">offer percentage</label>
+          <input type="tel" onkeyup="calculateoffer()" id="offerpercentage" name="offerpercentage" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <p class="text-danger"></p>
+          <label for="Name">offer price</label>
+          <input type="tel" id="offerprice" name="offerprice" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <p class="text-danger"></p>
+          <label for="Name">stock</label>
+          <input type="tel" id="stock" name="stock" class="form-control">
+        </div>
+        <div>
+          <p class="text-danger"></p>
+          <label for="description">Description</label>
+          <textarea name="description" id="description" class="form-control" cols="30" rows="10"></textarea>
+        </div>
+
+        <div>
+          <p class="text-danger"></p>
+          <label for="">Image</label>
+          <input type="file" id="img" name="image" multiple class="form-control">
+        </div>
+
+        <div>
+          <p class="text-danger"></p>
+          <label for="">Image</label>
+          <input type="file" id="img1" name="image" multiple class="form-control">
+        </div>
+        <div>
+          <p class="text-danger"></p>
+          <label for="">Image</label>
+          <input type="file" id="img2" name="image" multiple class="form-control">
+        </div>
+        <div>
+          <p class="text-danger"></p>
+          <label for="">Image</label>
+          <input type="file" id="img3" name="image" multiple class="form-control">
+        </div>
+
+
+        <button type="button" onclick="validate()"  class="btn btn-primary mt-3" value="Upload">Upload</button>
+        <a href="/admin/products" class="btn btn-light mt-3">cancel</a>
+
+      </form>
+
+
+
+
+
+    </div>
+
+  </div>
+</div>
+
+<script>
+  document.getElementById('img').onchange = (e) => {
+    if (e.target.files) {
+      window.imgFile = e.target.files
+    }
+  };
+
+  function calculateoffer() {
+  let price = document.getElementById('price').value
+  let offerprice=document.getElementById('offerprice')
+  let offerpercentage=document.getElementById('offerpercentage').value
+  offerprice.value=price-price*offerpercentage/100
+  
+ }
+
+  function validate() {
+    console.log("meee");
+
+    let name = document.getElementById('name')
+    let nameValue = name.value.trim()
+    let err1 = name.parentElement.querySelector('p')
+    err1.innerText = ""
+
+    let cata = document.getElementById('exampleSelectcata')
+    let cataValue = cata.value
+
+
+    let price = document.getElementById('price')
+    let priceValue = price.value.trim()
+    let err2 = price.parentElement.querySelector('p')
+    err2.innerText = ""
+
+    let stock = document.getElementById('stock')
+    let stockValue = stock.value.trim()
+    let err3 = stock.parentElement.querySelector('p')
+    err3.innerText = ""
+
+    let description = document.getElementById('description')
+    let descValue = description.value
+    let err4 = description.parentElement.querySelector('p')
+    err4.innerText = ""
+
+
+    let img = document.getElementById('img')
+    let imgValue=img.value
+    let err5 = img.parentElement.querySelector('p')
+    err5.innerText = ""
+
+ 
+
+    
+
+//    let offerpercentage=document.getElementById('offerpercentage')
+//    let offerpercentageValue=offerpercentage.value
+//  let err6=offerpercentage.parentElement.querySelector('p')
+//  err6.innerText=""
+
+
+//     let offerprice=document.getElementById('offerprice')
+//     let offerpriceValue=offerprice.value.trim()
+//     let err7=offerprice.parentElement.querySelector('p')
+//     err7.innerText=""
+
+
+    let flag = 1
+
+    if (nameValue == "") {
+      err1.innerText = "this field is require"
+      flag = 2
+    }
+    if (priceValue == "") {
+      err2.innerText = "this field is require"
+      flag = 2
+    } else if (!priceValue.match(/^[0-9]/)) {
+      err2.innerHTML = "Please enter valid price"
+      flag = 2
+    }
+    if (stockValue == "") {
+      err3.innerText = "this field is require"
+      flag = 2
+    } else if (!stockValue.match(/^[0-9]/)) {
+      err3.innerHTML = "Please enter valid number"
+      flag = 2
+    }
+    if (descValue == "") {
+      err4.innerText = "this field is require"
+      flag = 2
+    }
+    if (imgValue=="") {
+      err5.innerText = "this field is require"
+      flag = 2
+    }
+    // if(offerpercentageValue==""){
+    //   err6.innerText="this field is require"
+    //   flag=2
+    // }
+
+
+
+    //  if(offerpriceValue==""){
+    //     err7.innerText="this field is require"
+    //     flag=2
+    //    }
+      
+
+
+    if (flag == 1) {
+      document.getElementById('myform').submit()
+    }
+
+
+    // function submit(nameValue, priceValue, stockValue, descValue, cataValue) {
+    //   const newData = new FormData();
+
+    //   newData.append('data', JSON.stringify({
+    //     name: nameValue,
+    //     price: priceValue,
+    //     stock: stockValue,
+    //     description: descValue,
+    //     catogory: cataValue,
+
+    //   }));
+
+    //   newData.append('files', window.imgFile[0], 'images');
+
+    //   fetch('/admin/add-product', {
+    //       method: 'post',
+    //       body: newData
+    //     })
+    //     .then((res) => res.json())
+    //     .then((res) => {
+    //       if (res.value == "success") {
+    //         window.location.href = "/admin/products"
+    //       } else {
+    //         var existError = document.getElementById('existError')
+    //         existError.innerText = "failed"
+    //       }
+    //     })
+    // }
+
+  }
+</script>

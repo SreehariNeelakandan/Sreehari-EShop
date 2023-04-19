@@ -1,0 +1,421 @@
+<script src="https://unpkg.com/easyinvoice/dist/easyinvoice.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/easyinvoice/dist/easyinvoice.min.js"></script>
+<style>
+  body {
+    background-image: url('/images/page-header-bg.jpg');
+  }
+
+
+  .btn {
+    min-width: 60px;
+    color: white;
+  }
+
+  h6 {
+    padding-right: 50px;
+
+  }
+
+  .line {
+    width: 100.5%;
+    height: 1px;
+    background-color: #FCB941;
+  }
+
+  .nav {
+    background-image: url('/images/page-header-bg.jpg');
+  }
+
+  .fas.fa-angle-up {
+    display: none;
+  }
+
+
+
+  /* Main */
+
+  .mainDiv {
+    height: auto;
+    border: 1px solid #a1a1a1;
+    border-radius: 5px;
+  }
+
+  .addrDiv {
+    height: auto;
+    border: 1px solid #a1a1a1;
+    border-radius: 5px;
+
+  }
+</style>
+<section>
+
+
+  </div>
+  <div class="container-fluid ">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="mainbar ">
+          <section id="page-top">
+            <!-- Page Wrapper -->
+            <div id="wrapper">
+              <!-- Content Wrapper -->
+              <div id="content-wrapper" class="d-flex flex-column">
+                <!-- Main Content -->
+                <div id="content">
+                  <!-- Begin Page Content -->
+                  <div class="container-fluid">
+                    <!-- DataTales Example -->
+                    <div class="card shadow mt-5 mb-4" style="border: 5px solid #ebebeb; background-image: url('/images/page-header-bg.jpg');">
+                      <div class="card-body mt-4">
+
+                        <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
+                          <div class="container">
+                              <h1 class="page-title">Orders<span>Shop</span></h1>
+                          </div><!-- End .container -->
+                        </div><!-- End .page-header -->
+                        <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                          <div class="container">
+                              <ol class="breadcrumb">
+                                  <li class="breadcrumb-item"><a href="/">Home</a></li>
+                                  <li class="breadcrumb-item"><a href="/shop">Shop</a></li>
+                                  <li class="breadcrumb-item active" aria-current="page">Orders</li>
+                              </ol>
+                          </div><!-- End .container -->
+                        </nav><!-- End .breadcrumb-nav -->
+                     <% if(orderItems) {%> 
+                      
+                        <% orderItems?.orders?.reverse().forEach(order=>{%>
+                        <div class="container">
+                          <div class="row">
+                            <div class="col-12">
+                              <%  const dataToReadable=(date)=>{
+  
+                                      const date_ = new Date(date);
+                                      let month = ['Jan','Feb','March','April','May','June','July','Aug','Sept','Oct','Nov','Dec']
+                                      let dd = date_.getDate();
+                                      let mm = date_.getMonth();
+                                      let monthText = month[mm]
+                                      let yyyy = date_.getFullYear();
+  
+                                      return `${isNaN(dd)?'00':dd}-${monthText}-${isNaN(yyyy)?'0000':yyyy}`;
+                                      }; %>
+
+
+                         
+
+
+                            </div>
+                          </div>
+
+
+                         
+                          
+                          <div class="row mt-1">
+
+                            <div class="row mt-5">
+
+                              <div class="mx-3">
+                                <h6 style="font-weight: 400; font-size: small; color: #585858;">ORDERED :<%=dataToReadable(order.createdAt) %> <span class="px-4 text-light">|</span>ORDER ID : <%= order._id  %> </h6>
+                              </div>
+
+                              <div class="col-12 mainDiv">
+                                <% order.productDetails.forEach((elementitems,index)=>{ %>
+                                <div class="row mt-2 p-3 mb-2">
+                                  <div class="col-6 mx-3" style="float: left;">
+                                    <div class="d-flex pl-5"><span style="margin-top: 6px;" class="mx-3 text-dark">
+                                        <h5 class="pl-2" >Name</h5>
+                                        <%=elementitems.productsName%>
+                                      </span>
+                                    </div>
+                                    <div class="d-flex">
+                                      <img class="mx-5 mt-2" style="width: 100px; height:100px; object-fit:contain" src="/productimages/<%=elementitems.img[0]%>" alt="">
+                                      <div class="d-flex-column">
+                                        <div class="mt-2" style="font-size: large;"><span class="px-2" style="color: #fb7e00; font-weight: 500;">Rs: <%= elementitems.offerprice %> </span> Qty: <%= elementitems.quantity %><span class="mx-2" style="font-weight: 500;"> </span></div>
+                            <!--product status -->         <% if(elementitems.status){%> 
+                                        <div class="text-center text-white mt-1 py-2 " style="width: 100px;height:23px; border-radius: 10px; background-color: rgb(109, 176, 85); font-size: small; font-weight: 600;">
+                                          <span>Order Placed</span>
+                                        </div>
+                                  <% }else{ %> 
+                                        <div class="text-center text-white mt-1 py-2" style="width: 100px;height:23px; border-radius: 10px; background-color: rgb(205, 66, 66); font-size: small; font-weight: 600;">
+                                          Cancelled
+                                        </div>
+                                        <% } %> 
+
+                                      </div>
+
+                                    </div>
+                                    <button class="btn btn-primary mt-2" style="height:40px; width: 180px;" onclick="downloadinvoice('<%=order._id%>','<%=index%>')" >Download invoice</button>
+
+                                  </div>
+                                  
+                                  <div class="col-5 " style="float: left;margin-top: 85px !important">
+                                    <div class="d-flex">
+                      
+                                      <% if(elementitems.status){ %> 
+                                      <div class="mt-1" style="margin-left: 50px !important;;">
+                                        <h6>ORDER STATUS</h6>
+                                        <%if(elementitems.shippingStatus==1) {%>
+                                          <!-- <b>placed</b> -->
+                                          <h5 class="pl-5">Placed</h5>
+                                          <% }else if(elementitems.shippingStatus==2){ %> 
+                                            <h5 class="pl-5" >Dispatched</h5>
+                                    <% }else if(elementitems.shippingStatus==3) {%> 
+                                       <h5 class="pl-5" >Shipped</h5>
+                                       <% }else{ %>
+                                      
+                                        <h5 class="pl-5" >  Delivered</h5>
+                                        <% } %>  
+                                      </div>
+                                      <% } %> 
+                                      <div class="mx-5 ">
+                                        <% if(elementitems.shippingStatus<=3){ %> 
+                                  <% if(elementitems.status){ %> 
+                                        <button class="cancel btn text-white " style="border-radius: 10px; width: 130px; background-color: rgb(234, 34, 4);" onclick= "cancelOrder('<%=order._id %>','<%=elementitems._id %>',)">Cancel Order</button>
+                                   <% } else{ %> 
+                                
+                                        <button class="cancel btn text-white bg-danger" style="border-radius: 10px; width: 130px; " disabled>Cancel Order</button>
+                                  
+                                       <% } %> 
+                                       <% } %> 
+                                     <%if(elementitems.shippingStatus==4) { %>   
+                                       <button class="btn btn-danger px-2" onclick=" returnorder('<%=order._id %>','<%=elementitems._id %>')"  >return order</button>
+                                       <% } else if(elementitems.shippingStatus<4) { %> 
+                                        <h5 hidden class="text-danger">ORDER RETURNED</h5>
+                                        <% } else{ %> 
+                                          <h5  class="text-danger">ORDER RETURNED</h5>
+                                          <% } %> 
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+<% }) %> 
+                              </div>
+                            </div>
+                            <div class="row mt-3">
+                              <div class="col-12">
+                               
+                                <div class="container row addrDiv pb-2">
+                                  <div class="col-4  " style="float: left;">
+                                    <h6 class="mt-2 mx-4">SHIPPING ADDRESS</h6>
+                                    <p class="mx-4 mt-1">
+                                      <span style="font-weight: 500;"><b><%=order.shippingAddress.street%></b> </span> <br>
+                                   <b>  <%=order.shippingAddress.city%></b>   <br>
+                                    <b>  <%=order.shippingAddress.phone%></b> <br>
+                                     <b> <%=order.shippingAddress.state%></b>
+                                    </p>
+                                  </div>
+
+                                  <div class="col-4 ">
+                                    <h6 class="mt-2 mx-4 ">PAYMENT METHOD</h6>
+                                    <p class="mx-4 mt-1 pl-5"><b><%=order.paymentMethod%></b> </p>
+                                    <div class="mt-5">
+                                      <h6 class="mt-2 mx-4 pl-4">PAYMENT STATUS</h6>
+                              <% if(order.paymentStatus==1){ %> 
+                                      <p class="mx-4 mt-1 text-success pl-5">success</p>
+                                      <% }else{ %>
+                                        <p class="mx-4 mt-1 text-danger pl-5">pending</p> 
+                                        <% } %> 
+                                    </div>
+                                  </div>
+                                  <div class="col-4">
+                                    <% if(order.couponAmount==0){ %> 
+
+<% } else{%>
+  <h4 class="mt-2 mx-4 ">Discount</h4><span class="mx-4 mt-2 " style=" color: #21aa1c;font-size:18px !important; " >Rs:<%=order.couponAmount  %> </span>
+  <% } %> 
+
+
+                                    <h5 class="mt-2 mx-4 ">TOTAL PRICE</h5>
+                                    <span class="mx-4 mt-2 " style="color: #fb6400; font-size: x-large !important; font-weight: 500; ">Rs:<%=order.totalPrice  %> </span>
+
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+                        <% }) %>
+                        
+                        <% }else{ %> 
+                          <h1 class="text-center">no orders</h1>
+                          <% } %> 
+<hr>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <a class="scroll-to-top rounded" href="#page-top">
+          <i class="fas fa-angle-up"></i>
+        </a>
+        
+        
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLabel">Ready to Leave?</h3>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div class="modal-body">Select "Logout" below if you are ready to end your current
+                session.</div>
+              <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="login.html">Logout</a>
+              </div>
+            </div>
+          </div>
+        </div>
+</section>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+
+<script>
+
+  function cancelOrder(orderId,proId) {
+      $.ajax({
+          url: '/cancelOrder',
+          data: {
+              orderId:orderId,
+              productId: proId
+          },
+          method: 'put',
+          beforeSend: () => {
+              return confirm('are you sure')
+          },
+          success:(response)=>{
+               window.location.reload()
+          }
+
+      })
+  }
+
+ function returnorder(orderId,proId){
+  $.ajax({
+    url:'/return-order',
+    method:'post',
+    data:{
+      orderId:orderId,
+      proId:proId,
+    },  beforeSend: () => {
+              return confirm('are you sure')
+          },
+    success:(response)=>{
+      if(response.status){
+            location.reload()
+      }else{
+       return alert("already returned")
+      }
+    }
+  })
+ }
+
+
+
+
+
+  function downloadinvoice(orderId,index){
+    $.ajax({
+      url:'/downloadinvoice/'+orderId,
+      method:'get',
+      success:(response)=>{
+       console.log(response,"my resssss");
+        let orderData=response.orders
+        var data=getSampleData(orderData,index)
+        console.log(data,"gggggg");
+        easyinvoice.createInvoice(data, function(result) {
+  	easyinvoice.download('myInvoice.pdf', result.pdf);
+   
+
+  });
+       
+      }
+    })
+
+  }
+
+
+function getSampleData(orderData,index) {
+
+    return {
+        // "customize": {
+        //     "template": "SGVsbG8gd29ybGQh" // Must be base64 encoded html. This example contains 'Hello World!' in base64
+        // },
+        images: {
+            logo: 'https://public.easyinvoice.cloud/img/logo_en_original.png',
+            background: 'https://public.easyinvoice.cloud/img/watermark-draft.jpg'
+        },
+        sender: {
+            company: 'Updown cycles ',
+            address: 'main street newyorkcity',
+            zip: '1234 AB',
+            city: 'Sampletown',
+            country: 'United States'
+            // "custom1": "custom value 1",
+            // "custom2": "custom value 2",
+            // "custom3": "custom value 3"
+        },
+        client: {
+            company: orderData.firstname +' '+ orderData.lastname,
+            address:orderData.shippingAddress.street,
+            zip: orderData.shippingAddress.pincode,
+            city: orderData.shippingAddress.city,
+            state: orderData.shippingAddress.state
+            // "custom1": "custom value 1",
+            // "custom2": "custom value 2",
+            // "custom3": "custom value 3"
+        },
+        information: {
+            number: orderData.phone,
+            date: orderData.createdAt,
+            'due-date': '31-12-2021'
+        },
+        products: [
+            {
+                quantity: orderData.productDetails[index].quantity,
+                description: orderData.productDetails[index].productsName,
+                'tax-rate': 0,
+                price: orderData.productDetails[index].offerprice
+            }
+        ],
+        'bottom-notice': 'Kindly pay your invoice within 15 days.',
+        settings: {
+            currency: 'INR' // See documentation 'Locales and Currency' for more info. Leave empty for no currency.
+            // "locale": "nl-NL", // Defaults to en-US, used for number formatting (see docs)
+            // "taxNotation": "gst", // Defaults to vat
+            // "margin-top": 25, // Default to 25
+            // "margin-right": 25, // Default to 25
+            // "margin-left": 25, // Default to 25
+            // "margin-bottom": 25, // Default to 25
+            // "format": "Letter", // Defaults to A4,
+            // "height": "1000px", // allowed units: mm, cm, in, px
+ 		        // "width": "500px", // allowed units: mm, cm, in, px
+     		    // "orientation": "landscape", // portrait or landscape, defaults to portrait
+        }
+        // Used for translating the headers to your preferred language
+        // Defaults to English. Below example is translated to Dutch
+        // "translate": {
+        //     "invoice": "FACTUUR",
+        //     "number": "Nummer",
+        //     "date": "Datum",
+        //     "due-date": "Verloopdatum",
+        //     "subtotal": "Subtotaal",
+        //     "products": "Producten",
+        //     "quantity": "Aantal",
+        //     "price": "Prijs",
+        //     "product-total": "Totaal",
+        //     "total": "Totaal"
+        // },
+    };
+}
+
+</script>

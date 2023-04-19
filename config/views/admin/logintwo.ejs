@@ -1,0 +1,104 @@
+<div class="container-scroller">
+  <div class="container-fluid page-body-wrapper full-page-wrapper">
+    <div class="content-wrapper d-flex align-items-center auth px-0">
+      <div class="row w-100 mx-0">
+        <div class="col-lg-4 mx-auto">
+          <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+            <div class="brand-logo">
+              <img src="../../images/logo.svg" alt="logo">
+            </div>
+            <h4>Hello! let's get started</h4>
+            <h6 class="font-weight-light">Sign in to continue.</h6>
+            <form  class="pt-3">
+              <p id="existError" class="text-danger"> </p>
+              <div class="form-group">
+                <p id="err" class="text-danger"></p>
+                <input name="email" class="form-control form-control-lg" id="email" placeholder="email">
+              </div>
+              <div class="form-group">
+                <p id="err" class="text-danger"></p>
+                <input name="password" class="form-control form-control-lg" id="password" type="password" placeholder="Password">
+              </div>
+              <div class="mt-3">
+                <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" type="button" onclick="validation()">Login</button>
+
+              </div>
+              <div class="my-2 d-flex justify-content-between align-items-center">
+                <div class="form-check">
+                  <label class="form-check-label text-muted">
+                    <input type="checkbox" class="form-check-input">
+                    Keep me signed in
+                  </label>
+                </div>
+                <a href="#" class="auth-link text-black">Forgot password?</a>
+              </div>
+              <div class="mb-2">
+                <button type="button" class="btn btn-block btn-facebook auth-form-btn">
+                  <i class="ti-facebook mr-2"></i>Connect using facebook
+                </button>
+              </div>
+              <div class="text-center mt-4 font-weight-light">
+                Don't have an account? <a href="register.html" class="text-primary">Create</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function validation() {
+        let email = document.getElementById('email')
+        let emailValue = email.value.trim()
+        const err1 = email.parentElement.querySelector('p')
+        err1.innerText = ""
+
+        let password = document.getElementById('password')
+        let passwordValue = password.value.trim()
+        const err2 = password.parentElement.querySelector('p')
+        err2.innerText = ""
+
+        let flag = 1
+
+        if (emailValue == "") {
+          err1.innerText = "this field is required"
+          flag = 2
+        } else if (!emailValue.match(/^[A-Za-z0-9_]{3,}@[A-Za-z]{3,}[.]{1}[A-Za-z.]{2,6}$/)) {
+          err1.innerText = "enter a valid email"
+          flag = 2
+        }
+        if (passwordValue == "") {
+          err2.innerText = "this field is required"
+          flag = 2
+        }
+        if (flag == 1) {
+          submit(emailValue, passwordValue)
+        }
+
+        function submit(emailValue,passwordValue)
+        {
+          console.log("hey");
+          fetch('/admin/logintwo',{
+               method:"POST",
+               headers: {
+                'Content-Type': 'application/json'
+            },
+            body:JSON.stringify({
+                email:emailValue,
+                password:passwordValue
+            })
+          })
+          .then((res)=>res.json())
+          .then((res)=>{
+            if(res.value=='success')
+            {
+              window.location.href="/admin"
+            }else{
+              var existError = document.getElementById('existError')
+                    existError.innerText = res.value
+            }
+          })
+        }
+
+      }
+    </script>

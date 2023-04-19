@@ -1,0 +1,72 @@
+<div class="container">
+  <div class="row">
+
+
+    <div class="col-md-6 mt-3">
+
+
+
+      <form  >
+<p id="existError" class="text-danger"></p>
+<div class="form-group">
+  <p id="error" class="text-danger"></p>
+        <label for="Category"> EDIT Category</label>
+        <input type="text" name="name" id="name" class="form-control" value="<%=category.name.toUpperCase()%>" required>
+    </div>
+        <button type="button" class="btn btn-primary mt-3" onclick="validation('<%=category._id%>')" value="Upload">Submit</button>
+
+      </form>
+
+
+    </div>
+
+  </div>
+</div>
+
+
+<script>
+ function validation(cataId) {
+    console.log("calll");
+    const cataname = document.getElementById('name')
+    const cataValue = cataname.value?.trim()
+    const err1 = cataname.parentElement.querySelector('p')
+    err1.innerText = ""
+    let flag = 1
+
+    if (cataValue == "") {
+      err1.innerText = "This Field is require"
+     flag = 2                                      
+    }
+if(flag==1)
+{
+  console.log("fooo");
+  submit(cataId,cataValue)
+}
+
+function submit(cataId,cataValue)
+{
+  fetch('/admin/edit-category/'+cataId,{
+    method:'post',
+     headers:{
+'Content-Type':'application/json'
+    },
+    body:JSON.stringify({
+      name:cataValue
+    })
+  }).then((res)=>res.json())
+  .then((res)=>{
+    if(res.value=="success"){
+      window.location.href='/admin/category'
+    }else{
+      var existError=document.getElementById('existError')
+      existError.innerText='The category already exists'
+    }
+  })
+}
+
+
+
+
+
+ }
+ </script>

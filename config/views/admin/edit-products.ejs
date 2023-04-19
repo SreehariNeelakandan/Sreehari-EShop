@@ -1,0 +1,249 @@
+<div class="container">
+  <div class="row">
+
+
+    <div class="col-md-6 mt-3">
+
+
+
+      <form action="/admin/edit-product/<%=product._id  %>" id="myform" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+          <p class="text-danger"></p>
+          <label for="Name">Name</label>
+          <input type="text" id="name" name="name" class="form-control" value="<%=product.name %> " required>
+        </div>
+
+        <div class="form-group">
+          <p class="text-danger"></p>
+          <label for="exampleInputName1">catagory</label>
+          <select class="form-control" name="coupon" id="exampleSelectcata">
+            <% category.forEach((category)=>{ %>
+            <option value="<%= category.name.toUpperCase() %> ">
+              <%= category.name.toUpperCase()  %>
+            </option>
+            <% }) %>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <p class="text-danger"></p>
+          <label for="Name">price</label>
+          <input type="tel" id="price" name="price" class="form-control" value="<%=product.price %>" required>
+        </div>
+        
+        <div class="form-group">
+          <p class="text-danger"></p>
+          <label for="Name">offer percentage</label>
+          <input type="tel" id="offerpercentage" onkeyup="calculateoffer()" name="offerpercentage" class="form-control" value="<%=product.offerpercentage %>" required>
+        </div>
+
+        <div class="form-group">
+          <p class="text-danger"></p>
+          <label for="Name">offer price</label>
+          <input type="tel" id="offerprice" name="offerprice" class="form-control" value="<%=product.offerprice %>" required>
+        </div>
+
+        <div class="form-group">
+          <p class="text-danger"></p>
+          <label for="Name">stock</label>
+          <input type="tel" id="stock" name="stock" value="<%=product.stock%>" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+          <p class="text-danger"></p>
+          <label for="description">Description</label>
+          <textarea name="description" id="description" class="form-control" cols="30" rows="10" value=""><%=product.description %></textarea>
+        </div>
+
+        <div class="form-group">
+          <p class="text-danger"></p>
+          <label for="">Image</label>
+          <img src="/productimages/<%= product.img[0] %>" style="width:100px; height:90px ; " id="imgView" alt="" class="my-3">
+          <input type="file" name="image" id="img" class="form-control" onchange="document.getElementById('imgView').src=window.URL.createObjectURL(this.files[0]),passindex(0)">
+        </div>
+
+        <div class="form-group">
+          <p class="text-danger"></p>
+          <label for="">Image</label>
+          <img src="/productimages/<%= product.img[1] %>" style="width:100px; height:90px ; " id="imgView1" alt="" class="my-3">
+          <input type="file" name="image" id="img" class="form-control"  onchange="document.getElementById('imgView1').src=window.URL.createObjectURL(this.files[0]),passindex(1)">
+        </div>
+
+        <div class="form-group">
+          <p class="text-danger"></p>
+          <label for="">Image</label>
+          <img src="/productimages/<%= product.img[2] %>" style="width:100px; height:90px ; " id="imgView2" alt="" class="my-3">
+          <input type="file" name="image" id="img" class="form-control" onchange="document.getElementById('imgView2').src=window.URL.createObjectURL(this.files[0]),passindex(2)">
+        </div>
+
+        <div class="form-group">
+          <p class="text-danger"></p>
+          <label for="">Image</label>
+          <img src="/productimages/<%= product.img[3] %>" style="width:100px; height:90px ; " id="imgView3" alt="" class="my-3">
+          <input type="file" name="image" id="img" class="form-control"  onchange="document.getElementById('imgView3').src=window.URL.createObjectURL(this.files[0]),passindex(3)">
+        </div>
+
+        <input type="text" id="indexOfImage" name="indexOfImage" hidden >
+
+        <button type="button" onclick="validate()" class="btn btn-primary mt-3" value="Upload">Upload</button>
+        <a href="/admin/products" class="btn btn-light mt-3">cancel</a>
+      </form>
+
+
+
+
+
+      <script>
+
+let index=[]
+function passindex(ind){
+  index.push(ind)
+  document.getElementById('indexOfImage').value=""+index
+}
+
+
+        (e) => {
+          document.getElementById('imgView').src = URL.createObjectURL(event.target.files[0])
+        }
+        (e) => {
+          document.getElementById('imgView1').src = URL.createObjectURL(event.target.files[0])
+        }
+        (e) => {
+          document.getElementById('imgView2').src = URL.createObjectURL(event.target.files[0])
+        }
+        (e) => {
+          document.getElementById('imgView3').src = URL.createObjectURL(event.target.files[0])
+        }
+        
+
+        function calculateoffer() {
+          let price = document.getElementById('price').value
+          let offerprice = document.getElementById('offerprice')
+          let offerpercentage = document.getElementById('offerpercentage').value
+          offerprice.value = price - price * offerpercentage / 100
+        }
+
+
+        // document.getElementById('img').onchange = (e) => {
+        //   if (e.target.files) {
+        //     window.imgFile = e.target.files
+        //   }
+        // };
+
+        function validate() {
+
+          let name = document.getElementById('name')
+          let nameValue = name.value.trim()
+          let err1 = name.parentElement.querySelector('p')
+          err1.innerText = ""
+
+          let cata = document.getElementById('exampleSelectcata')
+          let cataValue = cata.value.trim()
+
+          let price = document.getElementById('price')
+          let priceValue = price.value.trim()
+          let err2 = price.parentElement.querySelector('p')
+          err2.innerText = ""
+
+          let stock = document.getElementById('stock')
+          let stockValue = stock.value.trim()
+          let err3 = stock.parentElement.querySelector('p')
+          err3.innerText = ""
+
+          let description = document.getElementById('description')
+          let descValue = description.value
+          let err4 = description.parentElement.querySelector('p')
+          err4.innerText = ""
+
+          // let img = document.getElementById('img')
+          // let imgValue = img.value
+          // let err5 = img.parentElement.querySelector('p')
+          // err5.innerText = ""
+
+          let offerpercentage = document.getElementById('offerpercentage')
+          let offerpercentageValue = offerpercentage.value
+          let err6 = offerpercentage.parentElement.querySelector('p')
+          err6.innerText = ""
+
+
+          let offerprice = document.getElementById('offerprice')
+          let offerpriceValue = offerprice.value.trim()
+          let err7 = offerprice.parentElement.querySelector('p')
+          err7.innerText = ""
+
+
+          let flag = 1
+
+          if (nameValue == "") {
+            err1.innerText = "this field is required"
+            flag = 2
+          }
+          if (priceValue == "") {
+            err2.innerText = "this field requires"
+            flag = 2
+          } else if (!priceValue.match(/^[0-9]/)) {
+            err2.innerHTML = "Please enter valid number"
+            flag = 2
+          }
+          if (stockValue == "") {
+            err3.innerText = "requires"
+            flag = 2
+          } else if (!stockValue.match(/^[0-9]/)) {
+            err3.innerHTML = "Please enter valid number"
+            flag = 2
+          }
+          if (descValue == "") {
+            err4.innerText = "requies"
+            flag = 2
+          }
+          // if (imgValue == "") {
+          //   err5.innerText = "requires"
+          //   flag = 2
+          // }
+          if (offerpercentageValue == "") {
+            err6.innerText = "this field is require"
+            flag = 2
+          }
+          if (offerpriceValue == "") {
+            err7.innerText = "this field is require"
+            flag = 2
+          }
+          if (flag == 1) {
+            document.getElementById('myform').submit()
+
+          }
+
+
+
+
+          // function submit(nameValue, priceValue, stockValue, descValue, cataValue) {
+          //   const newData = new FormData()
+
+          //   newData.append('data', JSON.stringify({
+          //     name: nameValue,
+          //     price: priceValue,
+          //     stock: stockValue,
+          //     description: descValue,
+          //     catogory: cataValue,
+          //     proId: proId
+          //   }));
+
+          //   newData.append('files', window.imgFile[0], "files")
+
+          //   fetch('/admin/edit-product', {
+          //       method: 'post',
+          //       body: newData
+          //     })
+          //     .then((res) => res.json())
+          //     .then((res) => {
+          //       if (res.value == "success") {
+          //         window.location.href = "/admin/products"
+          //       } else {
+          //         var existError = document.getElementById('existError')
+          //         existError.innerText = "failed"
+          //       }
+          //     })
+          // }
+
+        }
+      </script>

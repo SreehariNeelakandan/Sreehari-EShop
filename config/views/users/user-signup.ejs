@@ -1,0 +1,188 @@
+
+<section>
+    
+    <main class="main">
+        <div class="login-page bg-image pt-8 pb-8 pt-md-12 pb-md-12 pt-lg-17 pb-lg-17"
+            style="background-image: url('/assets/images/backgrounds/signup.jpg')">
+            <div class="container-fluid">
+                <div class="form-box">
+                    <div class="form-tab">
+    
+    
+                        <ul class="nav nav-pills nav-fill" role="tablist">
+                            <li class="nav-item">
+                                <div class="d-flex justify-content-center ">
+                                    <img  src="/assets/images/uptownlogo.jpg" style="width:110px;" >
+                                </div>                                <a class="nav-link active" id="register-tab-2" data-toggle="tab" href="#register-2"
+                                    role="tab" aria-controls="register-2" aria-selected="true">SIGN UP</a>
+                            </li>
+                        </ul>
+    
+    
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="register-2" role="tabpanel"
+                                aria-labelledby="register-tab-2">
+    
+    
+                                <form action="" method="">
+                                    <p id="existError" class="text-danger"></p>
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label for="register-email-2">Full Name*</label>
+                                            <p id="err" class="text-danger"></p>
+                                            <input type="text" class="form-control" id="name" name="name"
+                                                required>
+                                        </div><!-- End .form-group -->
+    
+                                       
+    
+                                        <div class="form-group col-md-12">
+                                            <label for="register-email-2">Email Address *</label>
+                                            <p id="err" class="text-danger"></p>
+                                            <input type="email" class="form-control" id="email" name="email"
+                                                required>
+                                        </div><!-- End .form-group -->
+
+                                        <div class="form-group col-md-12">
+                                            <label for="register-email-2">Phone *</label>
+                                            <p id="err" class="text-danger"></p>
+                                            <input type="tel" class="form-control" id="phone" name="phone"
+                                                required>
+                                        </div><!-- End .form-group -->
+    
+    
+                                        <div class="form-group col-md-12">
+                                            <label for="register-password-2">Password *</label>
+                                            <p id="err" class="text-danger"></p>
+                                            <input type="password" class="form-control" id="password"
+                                                name="password" required>
+                                        </div><!-- End .form-group -->
+    
+                                     
+    
+                                       
+    
+                                        <div class="form-footer mx-auto mt-2">
+                                            <button type="button" class="btn btn-outline-primary-2 col-md-12" onclick="validation()">
+                                                <span>SIGN IN</span>
+                                                <i class="icon-long-arrow-right"></i>
+                                            </button>
+    
+                                        </div><!-- End .form-footer -->
+                                    </div>
+                                </form>
+    
+                                <div class="form-choice">
+                                    <p class="text-center">or sign up with</p>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <a href="#" class="btn btn-login btn-g">
+                                                <i class="icon-google"></i>
+                                                Login With Google
+                                            </a>
+                                        </div><!-- End .col-6 -->
+                                    </div><!-- End .row -->
+                                </div><!-- End .form-choice -->
+    
+                            </div><!-- .End .tab-pane -->
+                        </div><!-- End .tab-content -->
+                    </div><!-- End .form-tab -->
+                </div><!-- End .form-box -->
+            </div><!-- End .container -->
+        </div><!-- End .login-page section-bg -->
+    </main><!-- End .main -->
+</section>
+
+<!-- validation -->
+
+<script>
+    
+    function validation() {
+        const name = document.getElementById('name');
+        const email = document.getElementById('email');
+        const phone = document.getElementById('phone');
+        const password = document.getElementById('password');
+        const nameValue = name.value.trim();
+        const emailValue = email.value.trim();
+        const phoneValue = phone.value.trim();
+        const passwordValue = password.value.trim();
+        let flag = 1
+        const err1 = name.parentElement.querySelector('p')
+        err1.innerText = ""
+        const err2 = email.parentElement.querySelector('p')
+        err2.innerText = ''
+        const err3 = phone.parentElement.querySelector('p')
+        err3.innerText = ""
+        const err4 = password.parentElement.querySelector('p')
+        err4.innerText = ""
+        if (nameValue == "") {
+            err1.innerText = "This Field is Required"
+            flag = 2
+        } else if (nameValue <= 3) {
+            err1.innerText = "Please enter minimum 3 characters"
+            flag = 2
+        }
+        if (emailValue == "") {
+            err2.innerText = "This Field is Required"
+            flag = 2
+        } else if (!emailValue.match(/^[A-Za-z0-9_]{3,}@[A-Za-z]{3,}[.]{1}[A-Za-z.]{2,6}$/)) {
+            err2.innerText = "Please enter a valid email address"
+            flag = 2
+        }
+        if (phoneValue == "") {
+            err3.innerText = "This Field is Required"
+            flag = 2
+        } else if (!phoneValue.match(/^[0-9]{10}$/)) {
+            err3.innerHTML = "Please enter valid number"
+            flag = 2
+        }
+        if (passwordValue == "") {
+            err4.innerText = "This Field is Required"
+            flag = 2
+        } else if (passwordValue.length <= 4) {
+            err4.innerText = "Please Enter Minimum 4 Characters"
+            flag = 2
+        }
+        if (flag == 1) {
+            submit(nameValue, emailValue, passwordValue, phoneValue)
+        }
+    }
+
+
+
+
+    function submit(nameValue, emailValue, passwordValue, phoneValue) {
+        fetch('/signup', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: nameValue,
+                email: emailValue,
+                phone: phoneValue,
+                password: passwordValue
+            })
+        })
+            .then((res) => res.json())
+            .then((res) => {
+                if (res.value == "success") {
+                    window.location.href = '/login'
+                } else {
+                    var existError = document.getElementById('existError')
+                    existError.innerText = res.value
+                }
+            })
+    }
+
+</script>
+
+
+
+
+
+
+
+
+
+

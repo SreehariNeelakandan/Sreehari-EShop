@@ -1,0 +1,98 @@
+
+<div class="table-responsive pt-3">
+  <a class="btn btn-primary my-3" href="/admin/add-product" >add products</a>
+
+  <table class="table table-bordered ">
+    <thead>
+      <tr>
+        <th>
+          #
+        </th>
+        <th>
+          image
+        </th>
+        <th>
+          name
+        </th>
+        <th>
+          Description
+        </th>
+        <th>
+         offer price
+        </th>
+        <th>
+          stock
+        </th>
+        <th>
+          catogory
+        </th>
+       
+
+      </tr>
+    </thead>
+    <tbody>
+   
+      <% products.forEach((products,index)=>{%>
+<tr>
+  <td>
+<%= index+1 %>
+  </td>
+  <td>
+<img style="border-radius:0;" src="/productimages/<%= products.img[0] %>" alt="img">
+  </td>
+  <td>
+    <%= products.name %>
+  </td>
+  <td class="text-center" style="width: 400px;">
+    <%= products.description.slice(0,50)+"..." %>
+   
+  </td>
+  <td>
+    <%= products.offerprice%>
+  </td>
+ 
+  <td>
+    <%= products.stock %>
+  </td>
+  <td>
+ <a href="/admin/edit-product/<%=products._id%>"> <button class="btn-primary">edit</button></a> 
+ <button onclick="deleteBanner('<%=products._id%>' )" class="btn-danger">delete</button>
+
+</td>
+</tr>
+<% })%>
+    </tbody>
+  </table>
+  <nav aria-label="Page navigation example">
+    <ul class="pagination pt-2">
+      <li class="page-item">
+        <a class="page-link" href="#" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item">
+        <a class="page-link" href="#" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+<script>
+  const deleteBanner = (id) => {
+    if (prompt('Delete Category ? Type yes to confirm', 'yes')?.trim() == 'yes') {
+
+      fetch(`/admin/delete-product/${id}`, {
+        method: "delete",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      }).then((res)=>{
+        window.location.reload()
+      })
+    };
+  }
+</script>

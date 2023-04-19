@@ -1,0 +1,204 @@
+<section>
+
+    <main class="main">
+        <div class="login-page bg-image pt-8 pb-8 pt-md-12 pb-md-12 pt-lg-17 pb-lg-17"
+            >
+            <div class="container">
+                <div class="form-box">
+                    <div class="form-tab">
+
+
+                        <ul class="nav nav-pills nav-fill" role="tablist">
+                            <li class="nav-item">
+                                <div class="d-flex justify-content-center ">
+                                    <!-- <img  src="/assets/images/uptownlogo.jpg" style="width:140px;" > -->
+                                </div>
+                               
+                                <a class="nav-link active"  id="register-tab-2" data-toggle="tab" href="#register-2"
+                                    role="tab" aria-controls="register-2" aria-selected="true">LOGIN</a>
+                            </li>
+                        </ul>
+
+
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="register-2" role="tabpanel"
+                                aria-labelledby="register-tab-2">
+
+                                <form >
+                                    <div class="row">
+                                        
+                                        <p id="existError" class="text-danger"> </p>
+                                        <div class="form-group col-md-12">
+                                            <p id="err" class="text-danger"></p>
+                                            <label for="register-email-2">Email Address </label>
+                                            <input type="email" class="form-control" id="email" name="email"
+                                                required>
+                                        </div><!-- End .form-group -->
+
+                                        <div class="form-group col-md-12">
+                                            <p id="err" class="text-danger"></p>
+                                            <label for="register-password-2">Password </label>
+                                            <input type="password" class="form-control" id="password"
+                                                name="password" required>
+                                        </div><!-- End .form-group -->
+
+
+
+
+
+                                        <div class="form-footer mx-auto mt-2">
+                                            <button type="button" class="btn btn-outline-primary-2 col-md-12" onclick="validation()">
+                                                <span>SIGN IN</span>
+                                                <i class="icon-long-arrow-right"></i>
+                                            </button>
+                                            <div class=" mt-3 mx-auto">
+                                                <label class=" text-center" for="register-policy-2"><a
+                                                        href="/signup">Don't have an account ?</a> </label>
+                                            </div><!-- End .custom-checkbox -->
+                                            <div class=" mt-3 mx-auto">
+                                                <label class=" text-center" for="register-policy-2"><a
+                                                        href="/forgotpassword">ForgotPassword?</a> </label>
+                                            </div><!-- End .custom-checkbox -->
+                                        </div><!-- End .form-footer -->
+                                    </div>
+                                </form>
+
+                                <div class="form-choice">
+                                    <p class="text-center">or sign up with</p>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <a href="/otp" class="btn btn-login btn-g">
+                                                <i class="icon-phone"></i>
+                                                Login With Phone number
+                                            </a>
+                                        </div><!-- End .col-6 -->
+                                    </div><!-- End .row -->
+                                </div><!-- End .form-choice -->
+
+                            </div><!-- .End .tab-pane -->
+                        </div><!-- End .tab-content -->
+                    </div><!-- End .form-tab -->
+                </div><!-- End .form-box -->
+            </div><!-- End .container -->
+        </div><!-- End .login-page section-bg -->
+    </main><!-- End .main -->
+</section>
+
+<script>
+ function validation() {
+        const email = document.getElementById("email")
+        const password = document.getElementById("password")
+        const emailValue = email.value?.trim()
+        const passwordValue = password.value?.trim()
+        const err1 = email.parentElement.querySelector("p")
+        err1.innerText = ""
+        const err2 = password.parentElement.querySelector("p")
+        err2.innerText = ""
+        let flag = 1
+        if (emailValue == "") {
+            err1.innerText = "This field is required"
+               flag = 2
+        } else if (!emailValue.match(/^[A-Za-z0-9_]{3,}@[A-Za-z]{3,}[.]{1}[A-Za-z.]{2,6}$/)) {
+            err1.innerText = "Please enter a valid email address"
+             flag =2
+        }
+        if (passwordValue == "") {
+            err2.innerText = "This field is required"
+          flag = 2
+        }
+        if (flag == 1) {
+            
+            submit(emailValue, passwordValue)
+        }
+      function  submit(emailValue,passwordValue){
+        fetch('/login',{
+            method:'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body:JSON.stringify({
+                email:emailValue,
+                password:passwordValue
+            })
+        })
+        .then((res)=>res.json())
+        .then((res)=>{
+            console.log(res);
+            
+            if (res.value == "success") {   
+                window.location.href = "/"
+            }
+            else if(res.value=="blocked"){
+                Swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: 'Accound blocked!',
+ 
+})
+
+            }
+             else {
+                var existError = document.getElementById('existError')
+                    existError.innerText = "Invalid Email or Password"
+            }
+        })
+        }
+    }
+
+//     function validation() {
+//         const email = document.getElementById('email')
+//         const password = document.getElementById('password')
+
+//         const emailValue = email.value.trim();
+//         const passwordValue = password.value.trim()
+
+//         let flag = 1
+
+//         const err1 = email.parentElement.querySelector('p')
+//         err1.innerText = ""
+//         const err2 = password.parentElement.querySelector('p')
+//         err2.innerText = ""
+//     }
+//     if (emailValue == "") {
+//         err1.innerText = "This field is required"
+//       let flag = 2
+//     }
+//     else if (!emailValue.match(/^[A-Za-z0-9_]{3,}@[A-Za-z]{3,}[.]{1}[A-Za-z.]{2,6}$/)) {
+//         err1.innerText = "Please enter a valid email address"
+//         let flag = 2
+//     }
+//     if (passwordValue == "") {
+//         err2.innerText = "This field is required"
+//         let flag = 2
+//     }
+//     if(flag==1)
+//     {
+//         submit(emailValue,passwordValue)
+//     }
+
+// function submit(emailValue,passwordValue)
+// {
+//     fetch('/login',{
+//         method:"POST",
+//         headers: {
+//                 'Content-Type': 'application/json'
+//             },
+//              body: JSON.stringify({
+//                 email:emailValue,
+//                 password:passwordValue
+//             })
+//     })
+//     .then((res)=> res.json())
+//     .then((res)=>{
+//         if(res.value=="success")
+//         {
+//             console.log("success");
+//             window.location.href ='/'
+//         }else{
+//             var existError = document.getElementById('existError')
+//                     existError.innerText = res.value
+           
+//         }
+//     })
+// }
+</script>

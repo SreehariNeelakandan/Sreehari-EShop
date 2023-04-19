@@ -1,0 +1,195 @@
+<% orderItems?.orders?.reverse().forEach(order=>{%>
+<div class="container">
+<section class=" gradient-custom-2">
+    <div class="container py-5 ">
+      <div class="row d-flex justify-content-strart align-items-center">
+        <div class="col-md-10 col-lg-8 col-xl-12">
+          <div class="card card-stepper" style="border-radius: 19px;">
+
+    
+            <div class="card-header p-4">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <p class="text-muted mb-2"> Order ID <span class="fw-bold text-body"><%= order._id  %>
+                      </span></p>
+                    <p class="text-muted mb-0"> Place On <span class="fw-bold text-body">Created At
+                      </span> </p>
+                    <p class="text-muted">Delivery Address : <span class="text-body"><%= order.shippingAddress.street%>
+                      </span></p>
+                    <p class="text-muted">pincode : <span class="text-body"><%= order.shippingAddress.pincode%>
+                      </span></p>
+                    <p class="text-muted">Contact Number : <span class="text-body"><%= order.shippingAddress.phone%>
+                      </span></p>
+                    <p class="text-muted">Email  <span class="text-body"><%= order.shippingAddress.email%>/span></p>
+
+                  </div>
+                  <div>
+                  </div>
+                </div>
+            </div>
+
+            <% order.productDetails.forEach((elementitems,index)=>{ %>
+            <!-- for Each -->
+              <div class="card-body p-4">
+                <div class="d-flex flex-row mb-1 pb-1">
+
+                  <div class="flex-fill">
+                    <h5 class="bold">  <%=elementitems.productsName%></h5>
+                    <h6 class="fw-bold">   <%=elementitems.productsName%></h6>
+                    <h5 class="mb-3"> $ price <span class="small text-muted">  <%=elementitems.productsName%></span></h5>
+                    <h6 class="mb-0"> <button class="btn"  onclick="" href="#">Download Invoice</a> </h6>
+
+                  </div>
+
+                  <div>
+                      <img class="align-self-center img-fluid" src="/productimages/<%=elementitems.img[0]%>" width="150">
+                    <%if(elementitems.shippingStatus==4){%>
+                         <%}else{%>
+                    <% if(elementitems.shippingStatus){%>
+                      <button id="cancelBtn" onclick=""style="width:10%;" class="btn btn-danger mt-1 p=0 border border-danger rounded">Cancel this item</button>
+                    <%}else{%>
+                      <button  disabled id="cancelBtn" style="width:10%;" class="btn btn-danger mt-1 p=0 border border-danger rounded">Item cancelled</button>
+                    <%}%>
+                    <%}%> 
+                    <br>
+                    <button id="cancelBtn" onclick="" style="width:10%;" class="btn btn-success mt-1 p=0 border border-danger rounded">return</button>
+
+                  </div>
+
+                </div>
+
+                <div class="col mt-5">
+                  <div class="text-center">
+                      Delivery Status
+                      <div class="text-center">
+                      <%if(elementitems.shippingStatus==1) {%>
+                        <a style="width:150px ;" class="btn btn-dark py-2" href="">order Placed</a>
+                      <% }else if(elementitems.shippingStatus==2) {%>
+                        <a style="width:150px ;" class="btn btn-secondary py-2" href="">order dispatched</a>
+                      <%}else if(elementitems.shippingStatus==3) {%>
+                        <a style="width:150px ;" class="btn btn-warning py-2" href="">out for delivery</a>
+                      <% }else if(elementitems.shippingStatus==4) {%>
+                        <a style="width:150px ;" class="btn btn-success py-2" href="">delivered</a>
+                      <%}else{ %>
+                        <img class="text-center" style="margin-left:43% ;" width="150px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWZJD5PBopryWB_o1vo03kVAbPok7drN9XZg&usqp=CAU" alt="">
+                      <%} %>
+                        <hr>
+                      </div>
+                  </div>
+                  
+                 
+
+
+
+                  <% }) %>
+
+                    <div style="background-color:#CAD5E2 ;" class="card-footer p-3">
+                      <div class="d-flex justify-content-around  ">
+                        <h5 class="fw-normal mb-0"><a href="#!"> </a></h5>
+                        <div class="border-start h-100"></div>
+                        <% if(order.paymentStatus==0){%> 
+                          <h5 class="text-danger"><a href="#!">payment : pending </a></h5>
+                          <%}else{%> 
+                            <h5 class=" text-success">payment : Completed </h5>
+                            <%}%>
+                              <div class="border-start h-100 "></div>
+                              <h5 class="fw-normal mb-0"><a href="#!">Order Total: <%= order.totalPrice %> </a></h5>
+                              <div class="border-start h-100"></div>
+                              <h5 class="fw-normal mb-0"><a href="#!" class="text-muted"><i
+                                    class="fas fa-ellipsis-v"></i></a>
+                              </h5>
+                      </div>
+                    </div>
+                </div>
+              </div>
+          </div>
+        </div>
+  </section>
+</div>
+<% }) %> 
+  <style>
+    .gradient-custom-2 {
+      /* fallback for old browsers */
+      background: #fff5f5df;
+
+
+    }
+
+    #progressbar-1 {
+      color: #455A64;
+    }
+
+    #progressbar-1 li {
+      list-style-type: none;
+      font-size: 13px;
+      width: 33.33%;
+      float: left;
+      position: relative;
+    }
+
+    #progressbar-1 #step1:before {
+      content: "1";
+      color: #fff;
+      width: 29px;
+      margin-left: 22px;
+      padding-left: 11px;
+    }
+
+    #progressbar-1 #step2:before {
+      content: "2";
+      color: #fff;
+      width: 29px;
+    }
+
+    #progressbar-1 #step3:before {
+      content: "3";
+      color: #fff;
+      width: 29px;
+      margin-right: 22px;
+      text-align: center;
+    }
+
+    #progressbar-1 li:before {
+      line-height: 29px;
+      display: block;
+      font-size: 12px;
+      background: #455A64;
+      border-radius: 50%;
+      margin: auto;
+    }
+
+    #progressbar-1 li:after {
+      content: '';
+      width: 121%;
+      height: 2px;
+      background: #455A64;
+      position: absolute;
+      left: 0%;
+      right: 0%;
+      top: 15px;
+      z-index: -1;
+    }
+
+    #progressbar-1 li:nth-child(2):after {
+      left: 50%
+    }
+
+    #progressbar-1 li:nth-child(1):after {
+      left: 25%;
+      width: 121%
+    }
+
+    #progressbar-1 li:nth-child(3):after {
+      left: 25%;
+      width: 50%;
+    }
+
+    #progressbar-1 li.active:before,
+    #progressbar-1 li.active:after {
+      background: #1266f1;
+    }
+
+    .card-stepper {
+      z-index: 0
+    }
+  </style>

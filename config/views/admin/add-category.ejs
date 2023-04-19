@@ -1,0 +1,70 @@
+<div class="container">
+  <div class="row">
+
+
+    <div class="col-md-6 mt-3">
+
+      <form action="" method="" enctype="multipart/form-data">
+<p id="existError" class="text-danger" ></p>
+        <div class="form-group">
+          <p id="error" class="text-danger"></p>
+          <label for="exampleInputName1">Name</label>
+          <input id="name" type="text" name="name" class="form-control" placeholder="Name" >
+      </div>
+      <button onclick="validation()" type="button" class="btn btn-primary mr-2">Submit</button>
+
+      </form>
+
+    </div>
+
+  </div>
+</div>
+
+
+<script>
+
+  function validation() {
+    console.log("calll");
+    const cataname = document.getElementById('name')
+    const cataValue = cataname.value?.trim()
+    const err1 = cataname.parentElement.querySelector('p')
+    err1.innerText = ""
+    let flag = 1
+
+    if (cataValue == "") {
+      err1.innerText = "This Field is require"
+     flag = 2                                      
+    }
+if(flag==1)
+{
+  console.log("fooo");
+  submit(cataValue)
+}
+
+function submit(cataValue)
+{
+  fetch('/admin/add-category',{
+    method:'POST',
+    headers:{
+'Content-Type':'application/json'
+    },
+    body:JSON.stringify({
+      name:cataValue                  ///name is what is stored in schema
+    })
+  })
+  .then((res)=>res.json())
+  .then((res)=>{
+    if(res.value =="success") {
+      window.location.href="/admin/category"
+    }
+    else{
+      var existError=document.getElementById('existError')
+      existError.innerText='The category already exists'
+    }
+  })
+}
+  }
+
+
+
+</script>

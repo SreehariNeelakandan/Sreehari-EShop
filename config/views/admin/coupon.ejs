@@ -1,0 +1,74 @@
+<div class="table-responsive pt-3">
+    <a href="/admin/add-coupon" class="btn btn-primary my-3">add Coupon</a>
+  
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>
+            name
+          </th>
+          <th>
+            min purchase
+          </th>
+          <th>
+            discount %
+          </th>
+  
+          <th>
+            max discount value
+          </th>
+
+          <th>
+            Description
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+       <% allcoupon.forEach(element=>{%> 
+  <tr>
+    <td>
+ <%=element.couponName%> 
+    </td>
+    <td>
+      <%=element.minPurchase%> 
+    </td>
+
+    <td>
+      <%=element.discountPercentage%> 
+    </td>
+
+    <td>
+      <%=element.maxDiscountValue%> 
+    </td>
+
+    <td>
+      <%=element.description%> 
+    </td>
+
+    <td>
+ <a href="/admin/edit-coupon/<%=element._id %>" class="btn btn-success">edit</a>
+ <!-- <a href="/admin/delete-coupon/<%=element._id %> " class="btn btn-danger" onclick="return confirm('are you sure')" >delete</a> -->
+ <button onclick="deleteBanner('<%=element._id%>' )" class="btn-danger">delete</button>
+
+    </td>
+   
+  </tr>
+<% }) %> 
+      </tbody>
+    </table>
+  </div>
+  <script>
+      const deleteBanner = (id) => {
+    if (prompt('Delete Category ? Type yes to confirm', 'yes')?.trim() == 'yes') {
+
+      fetch(`/admin/delete-coupon/${id}`, {
+        method: "delete",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      }).then((res)=>{
+        window.location.reload()
+      })
+    };
+  }
+  </script>

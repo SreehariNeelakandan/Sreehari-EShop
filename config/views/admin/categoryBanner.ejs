@@ -1,0 +1,64 @@
+<div class="table-responsive pt-3">
+  <a class="btn btn-primary my-3" href="/admin/addCataBanner">add cata Banner</a>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>
+          image
+        </th>
+        <th>
+          title
+        </th>
+        <th>
+          URL
+        </th>
+
+        <th>
+          <!-- <button>btn</button> -->
+        </th>
+
+
+      </tr>
+    </thead>
+    <tbody>
+
+      <% cataBanner.forEach(element => {%>
+
+
+      <tr>
+        <td>
+          <img style="border-radius:0;" src="/assets/banner-images/<%=element.img[0]%> " alt="img">
+        </td>
+        <td>
+          <%=element.title  %>
+        </td>
+        <td>
+          <%=element.url  %>
+        </td>
+        <td>
+          <!-- <a href="/admin/edit-product/"> <button class="btn-primary">edit</button></a> -->
+          <!-- <a href="/admin/delete-cataBanner/<%=element._id %> " onclick="return confirm('are you sure want to delete the product ')"><button class="btn-danger">delete</button></a> -->
+          <button onclick="deleteCBanner('<%=element._id%>' )" class="btn-danger">delete</button>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
+<script>
+  const deleteCBanner = (id) => {
+    if (prompt('Delete Category ? Type yes to confirm', 'yes')?.trim() == 'yes') {
+
+      fetch(`/admin/delete-cataBanner/${id}`, {
+        method: "delete",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      }).then((res)=>{
+        window.location.reload()
+      })
+    };
+  }
+</script>

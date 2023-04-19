@@ -1,0 +1,75 @@
+<div class="table-responsive pt-3">
+    <!-- <button class="btn-success"><a href="/admin/add-users" >add Users</a></button> -->
+  
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>
+            #
+          </th>
+          <th>
+            name
+          </th>
+          <th>
+         Email
+          </th>
+          <th>
+    Phone
+          </th>
+          <th>
+           block /unblock
+          </th>
+  
+        </tr>
+      </thead>
+      <tbody>
+        <% user.reverse().forEach((user,index)=>{%>
+        <tr>
+<td>
+  <%= index+1 %>
+</td>
+<td>
+  <%= user.name %>
+</td>
+<td>
+<%= user.email %> 
+</td>
+<td>
+<%= user.phone %> 
+</td>
+<td>
+  <% if(user.status){ %> 
+ <a href="/admin/block-user/<%= user._id%>" ><button type="button" onclick="return confirm('the user will be blocked')" class="btn btn-success btn-icon-text"> block</button></a>
+ <%} else{ %>  
+  <a href="/admin/unblock-user/<%= user._id%>" ><button type="button" onclick="return confirm('are you sure')" class="btn btn-danger btn-icon-text">unblock</button></a>
+  <% } %> 
+  </td>
+        </tr>
+        <% })%>
+      </tbody>
+    </table>
+    <div class="pt-5" >
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <% for(let i=1;i<=pages;i++){ %> 
+          <li class="page-item"><a class="page-link" href="/admin/users?page=<%=i %>"><%=i %> </a></li>
+          <% } %> 
+
+
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+   
+  </div>
+
+ 

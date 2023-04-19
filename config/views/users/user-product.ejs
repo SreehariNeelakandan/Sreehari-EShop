@@ -1,0 +1,506 @@
+<div class="page-content">
+    <div class="container">
+        <div class="product-details-top mb-2">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="product-gallery product-gallery-vertical">
+                        <div class="row">
+                            <figure class="product-main-image">
+                                <img id="product-zoom" src="/productimages/<%= products.img[0]%>" data-zoom-image="/productimages/<%= products.img[0]%>" alt="product image">
+
+                                <a href="#" id="btn-product-gallery" class="btn-product-gallery">
+                                    <i class="icon-arrows"></i>
+                                </a>
+                            </figure><!-- End .product-main-image -->
+
+                            <div id="product-zoom-gallery" class="product-image-gallery">
+                                <a class="product-gallery-item active" href="#" data-image="/productimages/<%= products.img[0]%>" data-zoom-image="/productimages/<%= products.img[0]%>">
+                                    <img src="/productimages/<%= products.img[0]%>" alt="product side">
+                                </a>
+
+                                <a class="product-gallery-item" href="#" data-image="/productimages/<%= products.img[1]%>" data-zoom-image="/productimages/<%= products.img[1]%>">
+                                    <img src="/productimages/<%= products.img[1]%>" alt="product cross">
+                                </a>
+
+                                <a class="product-gallery-item" href="#" data-image="/productimages/<%= products.img[2]%>" data-zoom-image="/productimages/<%= products.img[2]%>">
+                                    <img src="/productimages/<%= products.img[2]%>" alt="product with model">
+                                </a>
+
+                                <a class="product-gallery-item" href="#" data-image="/productimages/<%= products.img[3]%>" data-zoom-image="/productimages/<%= products.img[3]%>">
+                                    <img src="/productimages/<%= products.img[3]%>" alt="product back">
+                                </a>
+                            </div><!-- End .product-image-gallery -->
+                        </div><!-- End .row -->
+                    </div><!-- End .product-gallery -->
+                </div><!-- End .col-md-6 -->
+
+                <div class="col-md-6">
+                    <div class="product-details product-details-centered">
+                        <h1 class="product-title"><%- products.name %>  </h1><!-- End .product-title -->
+
+                        <div class="ratings-container">
+                            <div class="ratings">
+                                <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
+                            </div><!-- End .ratings -->
+                            <a class="ratings-text" href="#product-review-link" id="review-link">( 2 Reviews )</a>
+                        </div><!-- End .rating-container -->
+
+                        <div class="product-price">
+                           <strike> <p class="text-danger" > ₹<%- products.price %> </p><br></strike>
+                           <span class="text-success" >₹<%- products.offerprice %> </span> 
+                        </div><!-- End .product-price -->
+
+                        <div class="product-content">
+                            <span><%- products.description %> </span>
+                        </div><!-- End .product-content -->
+
+                        <!-- <div class="details-filter-row details-row-size">
+                            <label>Color:</label>
+
+                            <div class="product-nav product-nav-dots">
+                                <a href="#" class="active" style="background: #cc9966;"><span class="sr-only">Color name</span></a>
+                                <a href="#" style="background: #333333;"><span class="sr-only">Color name</span></a>
+                            </div>End .product-nav -->
+                        <!-- </div>End .details-filter-row -->
+
+                        <!-- <div class="details-filter-row details-row-size">
+                            <label for="size">Size:</label>
+                            <div class="select-custom">
+                                <select name="size" id="size" class="form-control">
+                                    <option value="#" selected="selected">One Size</option>
+                                    <option value="s">Small</option>
+                                    <option value="m">Medium</option>
+                                    <option value="l">Large</option>
+                                    <option value="xl">Extra Large</option>
+                                </select>
+                            </div>End .select-custom -->
+
+                            <!-- <a href="#" class="size-guide"><i class="icon-th-list"></i>size guide</a>
+                        </div>End .details-filter-row -->
+
+                        <div class="product-details-action">
+                            <!-- <div class="details-action-col">
+                                <div class="product-details-quantity">
+                                    <input type="number" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
+                                </div>End .product-details-quantity -->
+
+                                <button href="#" onclick="addToCart('<%=products._id%>','<%=products.stock%>')" class="btn-product btn-cart"><span>add to cart</span></button>
+                            </div><!-- End .details-action-col -->
+
+                            <div class="details-action-wrapper">
+                                <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a>
+                                <a href="#" class="btn-product btn-compare" title="Compare"><span>Add to Compare</span></a>
+                            </div><!-- End .details-action-wrapper -->
+                        </div><!-- End .product-details-action -->
+
+                        <div class="product-details-footer">
+                            <div class="product-cat">
+                                <span class="text-success">Category:</span>
+                                <a href="#" class="text-dark"><%- products.catogory%> </a>
+                                
+                            </div><!-- End .product-cat -->
+
+                            <div class="social-icons social-icons-sm">
+                                <span class="social-label">Share:</span>
+                                <a href="#" class="social-icon" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
+                                <a href="#" class="social-icon" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
+                                <a href="#" class="social-icon" title="Instagram" target="_blank"><i class="icon-instagram"></i></a>
+                                <a href="#" class="social-icon" title="Pinterest" target="_blank"><i class="icon-pinterest"></i></a>
+                            </div>
+                        </div><!-- End .product-details-footer -->
+                    </div><!-- End .product-details -->
+                </div><!-- End .col-md-6 -->
+            </div><!-- End .row -->
+        </div><!-- End .product-details-top -->
+
+        
+
+        <h2 class="title text-center mb-4">You May Also Like</h2><!-- End .title text-center -->
+        <!-- <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl" 
+            data-owl-options='{
+                "nav": false, 
+                "dots": true,
+                "margin": 20,
+                "loop": false,
+                "responsive": {
+                    "0": {
+                        "items":1
+                    },
+                    "480": {
+                        "items":2
+                    },
+                    "768": {
+                        "items":3
+                    },
+                    "992": {
+                        "items":4
+                    },
+                    "1200": {
+                        "items":4,
+                        "nav": true,
+                        "dots": false
+                    }
+                }
+            }'> -->
+            <!-- <div class="product product-7 text-center">
+                <figure class="product-media">
+                    <span class="product-label label-new">New</span>
+                    <a href="product.html">
+                        <img src="/assets/images/products/product-4.jpg" alt="Product image" class="product-image">
+                    </a>
+
+                    <div class="product-action-vertical">
+                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
+                        <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
+                        <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
+                    </div>End .product-action-vertical -->
+
+                    <!-- <div class="product-action">
+                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                    </div>End .product-action -->
+                <!-- </figure>End .product-media -->
+
+                <!-- <div class="product-body">
+                    <div class="product-cat">
+                        <a href="#">Women</a>
+                    </div>End .product-cat -->
+                    <!-- <h3 class="product-title"><a href="product.html">Brown paperbag waist <br>pencil skirt</a></h3>End .product-title -->
+                    <!-- <div class="product-price">
+                        $60.00
+                    </div>End .product-price
+                    <div class="ratings-container">
+                        <div class="ratings">
+                            <div class="ratings-val" style="width: 20%;"></div>
+                        </div>End .ratings -->
+                        <!-- <span class="ratings-text">( 2 Reviews )</span>
+                    </div>End .rating-container -->
+
+                    <!-- <div class="product-nav product-nav-dots">
+                        <a href="#" class="active" style="background: #cc9966;"><span class="sr-only">Color name</span></a>
+                        <a href="#" style="background: #333333;"><span class="sr-only">Color name</span></a>
+                        <a href="#" style="background: #806b3e;"><span class="sr-only">Color name</span></a>
+                    </div>End .product-nav -->
+                <!-- </div>End .product-body -->
+            <!-- </div>End .product -->
+
+            <!-- <div class="product product-7 text-center">
+                <figure class="product-media">
+                    <span class="product-label label-out">Out of Stock</span>
+                    <a href="product.html">
+                        <img src="/assets/images/products/product-6.jpg" alt="Product image" class="product-image">
+                    </a> -->
+
+                    <!-- <div class="product-action-vertical">
+                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
+                        <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
+                        <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
+                    </div>End .product-action-vertical -->
+
+                    <!-- <div class="product-action">
+                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                    </div>End .product-action -->
+                <!-- </figure>End .product-media -->
+
+                <!-- <div class="product-body">
+                    <div class="product-cat">
+                        <a href="#">Jackets</a>
+                    </div>End .product-cat -->
+                    <!-- <h3 class="product-title"><a href="product.html">Khaki utility boiler jumpsuit</a></h3>End .product-title -->
+                    <!-- <div class="product-price">
+                        <span class="out-price">$120.00</span>
+                    </div>End .product-price -->
+                    <!-- <div class="ratings-container">
+                        <div class="ratings">
+                            <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
+                        <!-- </div>End .ratings --> -->
+                        <!-- <span class="ratings-text">( 6 Reviews )</span> -->
+                    <!-- </div>End .rating-container -->
+                <!-- </div>End .product-body -->
+            <!-- </div>End .product -->
+
+            <!-- <div class="product product-7 text-center">
+                <figure class="product-media">
+                    <span class="product-label label-top">Top</span>
+                    <a href="product.html">
+                        <img src="/assets/images/products/product-11.jpg" alt="Product image" class="product-image">
+                    </a>
+
+                    <div class="product-action-vertical">
+                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
+                        <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
+                        <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
+                    </div>End .product-action-vertical -->
+
+                    <!-- <div class="product-action">
+                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                    </div>End .product-action -->
+                <!-- </figure>End .product-media -->
+
+                <!-- <div class="product-body">
+                    <div class="product-cat">
+                        <a href="#">Shoes</a>
+                    </div>End .product-cat -->
+                    <!-- <h3 class="product-title"><a href="product.html">Light brown studded Wide fit wedges</a></h3>End .product-title -->
+                    <!-- <div class="product-price">
+                        $110.00
+                    </div>End .product-price -->
+                    <!-- <div class="ratings-container">
+                        <div class="ratings"> -->
+                            <!-- <div class="ratings-val" style="width: 80%;"></div>End .ratings-val -->
+                        <!-- </div>End .ratings
+                        <span class="ratings-text">( 1 Reviews )</span>
+                    </div>End .rating-container -->
+
+                    <!-- <div class="product-nav product-nav-dots">
+                        <a href="#" class="active" style="background: #8b513d;"><span class="sr-only">Color name</span></a>
+                        <a href="#" style="background: #333333;"><span class="sr-only">Color name</span></a>
+                        <a href="#" style="background: #d2b99a;"><span class="sr-only">Color name</span></a>
+                    </div>End .product-nav -->
+                <!-- </div>End .product-body -->
+            <!-- </div>End .product -->
+
+            <!-- <div class="product product-7 text-center">
+                <figure class="product-media">
+                    <a href="product.html">
+                        <img src="/assets/images/products/product-10.jpg" alt="Product image" class="product-image">
+                    </a>
+
+                    <div class="product-action-vertical">
+                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
+                        <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
+                        <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
+                    </div>End .product-action-vertical -->
+
+                    <!-- <div class="product-action">
+                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                    </div>End .product-action -->
+                <!-- </figure>End .product-media -->
+
+                <!-- <div class="product-body">
+                    <div class="product-cat">
+                        <a href="#">Jumpers</a>
+                    </div>End .product-cat -->
+                    <!-- <h3 class="product-title"><a href="product.html">Yellow button front tea top</a></h3>End .product-title -->
+                    <!-- <div class="product-price">
+                        $56.00
+                    </div>End .product-price
+                    <div class="ratings-container">
+                        <div class="ratings">
+                            <div class="ratings-val" style="width: 0%;"></div> End .ratings-val -->
+                        <!-- </div>End .ratings --> -->
+                        <!-- <span class="ratings-text">( 0 Reviews )</span> -->
+                    <!-- </div>End .rating-container -->
+                <!-- </div>End .product-body -->
+            <!-- </div>End .product -->
+
+            <!-- <div class="product product-7 text-center">
+                <figure class="product-media">
+                    <a href="product.html">
+                        <img src="/assets/images/products/product-7.jpg" alt="Product image" class="product-image">
+                    </a> -->
+
+                    <!-- <div class="product-action-vertical">
+                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
+                        <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
+                        <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
+                    </div>End .product-action-vertical -->
+
+                    <!-- <div class="product-action"> -->
+                        <!-- <a href="#" class="btn-product btn-cart"><span>add to cart</span></a> -->
+                    <!-- </div>End .product-action -->
+                <!-- </figure>End .product-media -->
+
+                <!-- <div class="product-body">
+                    <div class="product-cat">
+                        <a href="#">Jeans</a>
+                    </div>End .product-cat -->
+                    <!-- <h3 class="product-title"><a href="product.html">Blue utility pinafore denim dress</a></h3>End .product-title -->
+                    <!-- <div class="product-price">
+                        $76.00
+                    </div>End .product-price
+                    <div class="ratings-container">
+                        <div class="ratings"> -->
+                            <!-- <div class="ratings-val" style="width: 20%;"></div>End .ratings-val -->
+                        <!-- </div>End .ratings -->
+                        <!-- <span class="ratings-text">( 2 Reviews )</span> -->
+                    <!-- </div>End .rating-container -->
+                <!-- </div>End .product-body -->
+            <!-- </div>End .product -->
+        <!-- </div>End .owl-carousel -->
+    <!-- </div>End .container -->
+<!-- </div>End .page-content -->
+<!-- </main>End .main -->
+
+<footer class="footer">
+<div class="footer-middle">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-lg-3">
+                <div class="widget widget-about">
+                    <img src="/assets/images/logo.png" class="footer-logo" alt="Footer Logo" width="105" height="25">
+                    <p>Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. </p>
+
+                    <div class="social-icons">
+                        <a href="#" class="social-icon" target="_blank" title="Facebook"><i class="icon-facebook-f"></i></a>
+                        <a href="#" class="social-icon" target="_blank" title="Twitter"><i class="icon-twitter"></i></a>
+                        <a href="#" class="social-icon" target="_blank" title="Instagram"><i class="icon-instagram"></i></a>
+                        <a href="#" class="social-icon" target="_blank" title="Youtube"><i class="icon-youtube"></i></a>
+                        <a href="#" class="social-icon" target="_blank" title="Pinterest"><i class="icon-pinterest"></i></a>
+                    </div><!-- End .soial-icons -->
+                </div><!-- End .widget about-widget -->
+            </div><!-- End .col-sm-6 col-lg-3 -->
+
+            <div class="col-sm-6 col-lg-3">
+                <div class="widget">
+                    <h4 class="widget-title">Useful Links</h4><!-- End .widget-title -->
+
+                    <ul class="widget-list">
+                        <li><a href="about.html">About Molla</a></li>
+                        <li><a href="#">How to shop on Molla</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="contact.html">Contact us</a></li>
+                        <li><a href="login.html">Log in</a></li>
+                    </ul><!-- End .widget-list -->
+                </div><!-- End .widget -->
+            </div><!-- End .col-sm-6 col-lg-3 -->
+
+            <div class="col-sm-6 col-lg-3">
+                <div class="widget">
+                    <h4 class="widget-title">Customer Service</h4><!-- End .widget-title -->
+
+                    <ul class="widget-list">
+                        <li><a href="#">Payment Methods</a></li>
+                        <li><a href="#">Money-back guarantee!</a></li>
+                        <li><a href="#">Returns</a></li>
+                        <li><a href="#">Shipping</a></li>
+                        <li><a href="#">Terms and conditions</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul><!-- End .widget-list -->
+                </div><!-- End .widget -->
+            </div><!-- End .col-sm-6 col-lg-3 -->
+
+            <div class="col-sm-6 col-lg-3">
+                <div class="widget">
+                    <h4 class="widget-title">My Account</h4><!-- End .widget-title -->
+
+                    <ul class="widget-list">
+                        <li><a href="#">Sign In</a></li>
+                        <li><a href="cart.html">View Cart</a></li>
+                        <li><a href="#">My Wishlist</a></li>
+                        <li><a href="#">Track My Order</a></li>
+                        <li><a href="#">Help</a></li>
+                    </ul><!-- End .widget-list -->
+                </div><!-- End .widget -->
+            </div><!-- End .col-sm-6 col-lg-3 -->
+        </div><!-- End .row -->
+    </div><!-- End .container -->
+</div><!-- End .footer-middle -->
+
+<div class="footer-bottom">
+    <div class="container">
+        <p class="footer-copyright">Copyright © 2019 Molla Store. All Rights Reserved.</p><!-- End .footer-copyright -->
+        <figure class="footer-payments">
+            <img src="/assets/images/payments.png" alt="Payment methods" width="272" height="20">
+        </figure><!-- End .footer-payments -->
+    </div><!-- End .container -->
+</div><!-- End .footer-bottom -->
+</footer><!-- End .footer -->
+</div><!-- End .page-wrapper -->
+<button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+
+<script>
+
+function addToCart(proId, stock) {
+    console.log("proid=>", proId, "stock=>", stock);
+    $.ajax({
+      url: '/check-cart-quantity/' + proId,
+      method: 'get',
+      success: (response) => {
+        if (response.status) {
+          if (stock - response.quantity <= 0) {
+          toast2()
+          } else {
+            $.ajax({
+              url: '/add-to-cart/' + proId,
+              method: 'get',
+
+              success: (response) => {
+                if (response.status) {
+                  toast1()
+                  let count = $('#cart-count').html()
+                  console.log(count, "is count");
+                  count = parseInt(count) + 1
+                  $('#cart-count').html(count)
+
+                }
+              }
+            })
+          }
+
+        } else if (response.status == false && stock == 0) {
+         toast2()
+        }
+        //   user exsist but no cart condition
+        else {
+          $.ajax({
+            url: '/add-to-cart/' + proId,
+            method: 'get',
+            success: (response) => {
+              if (response.status) {
+                 toast1()
+                let count = $('#cart-count').html()
+                console.log(count, "is count");
+                count = parseInt(count) + 1
+                $('#cart-count').html(count)
+              }
+            }
+          })
+        }
+      }
+    })
+
+
+
+
+  }
+ async function toast1()
+  {
+   const Toast=Swal.mixin({
+  toast: true,
+  position: 'bottom',
+  iconColor: 'white',
+  customClass: {
+    popup: 'colored-toast'
+  },
+  showConfirmButton: false,
+  timer: 1500,
+  timerProgressBar: true
+})
+await Toast.fire({
+  icon: 'success',
+  title: 'ITEM ADDED TO CART'
+})
+  }
+
+  async function toast2(){
+    const Toast= Swal.mixin({
+  toast: true,
+  position: 'bottom',
+  iconColor: 'white',
+  customClass: {
+    popup: 'colored-toast'
+  },
+  showConfirmButton: false,
+  timer: 1500,
+  timerProgressBar: true
+})
+await Toast.fire({
+  icon: 'error',
+  title: 'ITEM OUT OF STOCK'
+})
+
+  }
+
+
+</script>

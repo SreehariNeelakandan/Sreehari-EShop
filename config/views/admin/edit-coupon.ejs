@@ -1,0 +1,343 @@
+<div class="col-10 grid-margin">
+  <div class="card">
+    <div class="card-body">
+      <p id="existError" class="text-danger"></p>
+      <h4 class="card-title pb-5">Add new coupon</h4>
+      <form  action="/admin/edit-coupon/<%= coupon._id %>" method="post" id="myform" enctype="multipart/form-data">
+        <!-- <p class="card-description">
+                      Personal info
+                    </p> -->
+        <div class="alert alert-warning" id="errorDisplay" role="alert">
+
+        </div>
+        <div class="col">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Coupon Code</label>
+              <div class="col-sm-9">
+                <div class="input-group ">
+                  <input type="text" id="couponName" name="couponName" value="<%= coupon.couponName %>" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                  <!-- <div class="input-group-append">
+                    <button class="btn btn-outline-success" onclick="generateCode()" type="button">Generate Code</button>
+                  </div> -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">validity</label>
+              <div class="col-sm-9">
+                <input type="date"   id="expiry" name="expiry" value="<%= coupon.expiry %>" class="form-control" cols="45" rows="5" ></input>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Min Purchase </label>
+              <div class="col-sm-9">
+                <input id="minPurchase" type="number" class="form-control" name="minPurchase" value="<%=coupon.minPurchase  %>"/>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-md-6 discPer ">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Discount ( % )</label>
+              <div class="col-sm-9">
+                <input id="discountPercentage" type="number" class="form-control"  name="discountPercentage" value="<%= coupon.discountPercentage %>"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6" id="maxdiscountfield">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Max Discount(Rs)</label>
+              <div class="col-sm-9">
+                <input id="maxDiscountValue" type="number" class="form-control" name="maxDiscountValue" value="<%= coupon.maxDiscountValue %>" />
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Description(T&C)</label>
+              <div class="col-sm-9">
+                <textarea  id="description" name="description"  class="form-control"  cols="45" rows="5" value=""><%=coupon.description %></textarea>
+              </div>
+            </div>
+          </div>
+          
+          <!-- <a onclick="sumbitCoupon(couponName, expiry, minPurchase, description, discountPercentage, maxDiscountValue)" class="btn btn-outline-primary">submit</a> -->
+        <!-- <button type="submit"value="Upload">Submit</button> -->
+        <button type="button" onclick="validate('<%= coupon._id %>')" class="btn btn-primary mt-3" value="Upload">Upload</button>
+
+        </div>
+    </div>
+    </form>
+  </div>
+</div>
+</div>
+
+
+<script>
+
+function validate(id) {
+    console.log("calll");
+    const cname = document.getElementById('couponName')
+    const couponName = cname.value?.trim()
+
+    const cexp = document.getElementById('expiry')
+    const expiry = cexp.value?.trim()
+
+    const cmin = document.getElementById('minPurchase')
+    const minPurchase = cmin.value?.trim()
+
+    const cdes = document.getElementById('description')
+    const description = cdes.value?.trim()
+
+    const cdis = document.getElementById('discountPercentage')
+    const discountPercentage = cdis.value?.trim()
+
+    const cmax = document.getElementById('maxDiscountValue')
+    const maxDiscountValue = cmax.value?.trim()
+
+    // const err1 = cname.parentElement.querySelector('p')
+    // err1.innerText = ""
+    // const err2 = cexp.parentElement.querySelector('p')
+    // err1.innerText = ""
+    // const err3 = cmin.parentElement.querySelector('p')
+    // err1.innerText = ""
+    // const err4 = cdes.parentElement.querySelector('p')
+    // err1.innerText = ""
+    // const err5 = cdis.parentElement.querySelector('p')
+    // err1.innerText = ""
+    // const err6 = cmax.parentElement.querySelector('p')
+    // err1.innerText = ""
+    let flag = 1
+
+    // if (couponName == "") {
+    //   err1.innerText = "This Field is require"
+    //  flag = 2                                      
+    // }
+    // if (expiry == "") {
+    //   err1.innerText = "This Field is require"
+    //  flag = 2                                      
+    // }
+    // if (minPurchase == "") {
+    //   err1.innerText = "This Field is require"
+    //  flag = 2                                      
+    // }
+    // if (description == "") {
+    // err1.innerText = "This Field is require"
+    //  flag = 2                                      
+    // }
+    // if (discountPercentage == "") {
+    //   err1.innerText = "This Field is require"
+    //  flag = 2                                      
+    // }
+    // if (couponName == "") {
+    //   err1.innerText = "This Field is require"
+    //  flag = 2                                      
+    // }
+if(flag==1)
+{
+  console.log("fooo");
+  submit(id,couponName,expiry, minPurchase, description, discountPercentage, maxDiscountValue)
+}
+
+function submit(id,couponName,expiry, minPurchase, description, discountPercentage, maxDiscountValue)
+{
+  fetch('/admin/edit-coupon/'+id,{
+    method:'post',
+     headers:{
+'Content-Type':'application/json'
+    },
+    body:JSON.stringify({
+      couponName:couponName,
+      expiry:expiry,
+      minPurchase:minPurchase,
+       description:description,
+        discountPercentage:discountPercentage,
+         maxDiscountValue:maxDiscountValue
+    })
+  }).then((res)=>res.json())
+  .then((res)=>{
+    if(res.value=="success"){
+      window.location.href='/admin/coupon'
+    }
+    else{
+      var existError=document.getElementById('existError')
+      existError.innerText='The category already exists'
+    }
+  })
+}
+
+
+
+
+
+ }
+  // function validate(id)
+  // {
+  //   console.log(id,'id');
+
+  //   const name = document.getElementById('couponName')
+  //   const couponName = name.value?.trim()
+  //   document.getElementById('myform').submit(id,couponName, expiry, minPurchase, description, discountPercentage, maxDiscountValue)
+   
+   
+   
+  //   function submit(id,couponName, expiry, minPurchase, description, discountPercentage, maxDiscountValue){
+  //           const newData = new FormData()
+
+  //           newData.append('data', JSON.stringify({
+  //             id:id,
+  //             couponName:couponName,
+  //                 expiry:expiry,
+  //                 minPurchase:minPurchase,
+  //                 description:description,
+  //                 discountPercentage:discountPercentage,
+  //                 maxDiscountValue:maxDiscountValue
+  //           }));
+  //           console.log(newData,'new');
+  //           fetch('/admin/edit-coupon/'+id, {
+  //               method: 'post',
+  //               headers:{
+  //                     'Content-Type':'application/json'
+  //                         },
+  //               body: newData
+  //             })
+  //             .then((res) => res.json())
+  //             .then((res) => {
+  //               if (res.value == "success") {
+  //                 window.location.href = "/admin/coupon"
+  //               }
+  //                else {
+  //                 var existError = document.getElementById('existError')
+  //                 existError.innerText = "failed"
+  //               }
+  //             })
+  //         } 
+  
+  // }
+
+  //  function submit(nameValue, priceValue, stockValue, descValue, cataValue) {
+    
+  // function validatorCoupen() {
+  //   const coupenName = document.getElementById('couponName').value
+  //   const validity = document.getElementById('validity').value
+  //   const minAmount = document.getElementById('minAmount').value
+  //   const description = document.getElementById('description').value
+  //   const discountPercentage = document.getElementById('discountPercentage').value
+  //   const maxDiscountValue = document.getElementById('maxDiscountValue').value
+  //   const error = document.getElementById('errorDisplay')
+
+  //   let flag = 1
+  //   if (coupenName == "") {
+  //     error.innerText = "Generate coupen"
+  //     error.style.background = "rgb(200,0,0,0.1)"
+  //     error.style.width = "100%"
+  //     flag = 2
+  //   } else if (validity == '') {
+  //     error.innerText = 'expiry date is required'
+  //     error.style.background = 'rgb(200,0,0,0.1)'
+  //     error.style.width = "100%"
+  //     flag = 2
+  //   } else if (new Date(validity) - new Date() <= 0) {
+  //     error.innerText = 'this date has already expired'
+  //     error.style.background = 'rgb(200,0,0,0.1)'
+  //     error.style.width = "100%"
+  //     flag = 2
+  //   } else if (minAmount == '') {
+  //     error.innerText = 'min amount is required'
+  //     error.style.background = 'rgb(200,0,0,0.1)'
+  //     error.style.width = "100%"
+  //     flag = 2
+  //   } else if (minAmount < 1000) {
+  //     error.innerText = 'min amount should be greater that 1000'
+  //     error.style.background = 'rgb(200,0,0,0.1)'
+  //     error.style.width = "100%"
+  //     flag = 2
+  //   } else if (maxDiscountValue =="") {
+  //     error.innerText = `maximum offer is requied `
+  //     error.style.background = 'rgb(200,0,0,0.1)'
+  //     error.style.width = "100%"
+  //     flag = 2
+  //   } else if (description == '') {
+  //     error.innerText = 'description is required'
+  //     error.style.background = 'rgb(200,0,0,0.1)'
+  //     error.style.width = "100%"
+  //     flag = 2
+  //   } else if (maxDiscountValue == '') {
+  //     error.innerText = 'Max Discount value is required'
+  //     error.style.background = 'rgb(200,0,0,0.1)'
+  //     error.style.width = "100%"
+  //     flag = 2
+  //   } else if (discountPercentage == '') {
+  //     error.innerText = ' discount percentage is required'
+  //     error.style.background = 'rgb(200,0,0,0.1)'
+  //     error.style.width = "100%"
+  //     flag = 2
+  //   } else if (discountPercentage != '') {
+  //     if (discountPercentage > 100) {
+  //       error.innerText = ' discount percentage cannot be greated thant 100'
+  //       error.style.background = 'rgb(200,0,0,0.1)'
+  //       error.style.width = "100%"
+  //       flag = 2
+  //     }
+  //   }
+
+
+  //   if (flag == 1) {
+      
+  //     sumbitCoupon(coupenName, new Date(validity), minAmount, description, discountPercentage, maxDiscountValue)
+  //   }
+  // }
+
+//   function sumbitCoupon(couponName, validity, minAmount, description, discountPercentage, maxDiscountValue) {
+// // console.log(couponName,validity,minAmount,description,discountPercentage,maxDiscountValue);
+//     $.ajax({
+//       url: '/admin/edit-coupon'+couponName,
+//       method: 'POST',
+//       data: {
+//         couponName: couponName,
+//         expiry: expiry,
+//         minPurchase: minPurchase,
+//         discountPercentage: discountPercentage,
+//         maxDiscountValue: maxDiscountValue,
+//         description: description
+        
+//       },
+      
+//       success: (response) => {
+//         console.log('hu2');
+//        window.location.href=('/admin/coupon')
+//       }
+
+//     })
+//   }
+
+  
+
+
+  // function generateCode() {
+
+  //   $.ajax({
+  //     url: '/admin/generate-coupon-code',
+  //     method: 'get',
+  //     success: (response) => {
+  //       if (response.error) {
+  //         alert(response.error)
+  //       } else {
+  //         document.getElementById('couponName').value = response.voucherCode
+  //       }
+  //     }
+  //   })
+  // }
+   
+</script> 

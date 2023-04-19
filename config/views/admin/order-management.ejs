@@ -1,0 +1,89 @@
+<style>
+.tr{
+height:80px ;
+  }
+  tr{
+    height: 40px;
+  }
+</style>
+
+<div class="container mt-3">
+
+  <%  const dataToReadable=(date)=>{
+  
+    const date_ = new Date(date);
+    let month = ['Jan','Feb','March','April','May','June','July','Aug','Sept','oct','Nov','Dec']
+    let dd = date_.getDate();
+    let mm = date_.getMonth();
+    let monthText = month[mm]
+    let yyyy = date_.getFullYear();
+
+    return `${isNaN(dd)?'00':dd}-${monthText}-${isNaN(yyyy)?'0000':yyyy}`;
+    }; %>
+
+<table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+  <thead>
+    <tr class="text-center">
+      <th class="">User
+
+      </th>
+      
+      
+      <th class="">Order id
+
+      </th>
+    
+      <th class="">Total price
+
+      </th>
+      <th class="">Ordered On
+
+      </th>
+      <th class="">Status
+
+      </th>
+      <th class="">
+
+      </th>
+      
+    </tr>
+  </thead>
+  <tbody >
+ 
+  <% orderitems.reverse().forEach((items)=>{  %> 
+    <tr class="tr">
+    <td class="px-3"><%=items.orders.firstname%> </td>
+      <td><%=items.orders._id  %> </td>
+     
+      <td><%= items.orders.totalPrice %> </td>
+      <td><%=dataToReadable(items.orders.createdAt) %> </td>
+    <% if(items.orders.paymentStatus==1){ %>
+      <td style="background-color:rgb(11, 227, 43);" class="text-white">succuss</td>
+      <% }else{ %>
+        <td class="text-white" style="background-color: rgb(241, 14, 14);">pending</td>
+        <% } %>   
+      <td><a class="btn btn-dark pt-2" style="height: 33px;" href="/admin/view-more/<%=items.orders._id %> ">view more</a></td>
+    </tr>
+
+   <% }) %> 
+  </tbody>
+</table>
+</div>
+
+
+<script>
+  function search_animal() {
+    let input = document.getElementById('searchbar').value
+    input=input.toLowerCase();
+    let x = document.getElementsByClassName('animals');
+      
+    for (i = 0; i < x.length; i++) { 
+        if (!x[i].innerHTML.toLowerCase().includes(input)) {
+            x[i].style.display="none";
+        }
+        else {
+            x[i].style.display="list-item";                 
+        }
+    }
+}
+</script>

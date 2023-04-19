@@ -1,0 +1,54 @@
+<div class="container">
+    <div class="row">
+  
+  
+      <div class="col-md-6 mt-3">
+  
+  
+  
+        <form action="/admin/add-bannerMain" method="post"  enctype="multipart/form-data">
+          <p id="existError text-danger"></p>
+          <div class="form-group">
+            <p class="text-danger"></p>
+            <label for="Name">Name</label>
+            <input type="text" name="name" id="name" class="form-control">
+          </div>
+          <div class="form-group">
+  
+            <label for="exampleInputName1">description</label>
+            <input type="text" name="description" id="name" class="form-control">
+          </div>
+  
+          <div class="form-group">
+            <p class="text-danger"></p>
+            <label for="Name">marketprice</label>
+            <input type="tel" id="price" name="marketprice" class="form-control">
+          </div>
+  
+          <div class="form-group">
+            <p class="text-danger"></p>
+            <label for="Name">offerprice</label>
+            <input type="tel" id="stock" name="offerprice" class="form-control">
+          </div>
+          
+          <div>
+            <p class="text-danger"></p>
+            <label for="">Image</label>
+            <input type="file" id="img" name="image" multiple class="form-control">
+          </div>
+  
+  
+  
+          <button type="submit"   class="btn btn-primary mt-3" value="Upload">Upload</button>
+          <a href="/admin/products" class="btn btn-light mt-3">cancel</a>
+  
+        </form>
+  
+  
+  
+  
+  
+      </div>
+  
+    </div>
+  </div>

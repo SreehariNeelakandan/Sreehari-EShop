@@ -1,0 +1,415 @@
+
+<style>
+  .colored-toast.swal2-icon-success {
+  background-color: #a5dc86 !important;
+}
+
+.colored-toast.swal2-icon-error {
+  background-color: #f27474 !important;
+}
+
+.colored-toast.swal2-icon-warning {
+  background-color: #f8bb86 !important;
+}
+
+.colored-toast.swal2-icon-info {
+  background-color: #3fc3ee !important;
+}
+
+.colored-toast.swal2-icon-question {
+  background-color: #87adbd !important;
+}
+
+.colored-toast .swal2-title {
+  color: white;
+}
+
+.colored-toast .swal2-close {
+  color: white;
+}
+
+.colored-toast .swal2-html-container {
+  color: white;
+}
+</style>
+
+<section>
+  <main class="main">
+    <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
+      <div class="container-fluid">
+        <h1 class="page-title">EXPERIENCE THE GREATEST COLLECTIONS<span>SHOP</span></h1>
+      </div><!-- End .container-fluid -->
+    </div><!-- End .page-header -->
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
+      <div class="container-fluid">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <!-- <li class="breadcrumb-item"><a href="#">Shop</a></li> -->
+          <!-- <li class="breadcrumb-item"><a href="#">No Sidebar</a></li>-->
+          <li class="breadcrumb-item active" aria-current="page">shop</li>
+        </ol>
+      </div><!-- End .container-fluid -->
+    </nav><!-- End .breadcrumb-nav -->
+
+    <div class="container-fluid">
+      <div class="toolbox">
+        <div class="toolbox-left">
+          <a href="#" class="sidebar-toggler"><i class="icon-bars"></i>Filters</a>
+        </div><!-- End .toolbox-left -->
+
+       
+       
+      </div><!-- End .toolbox -->
+
+      <div class="products">
+        <div class="row">
+
+          <% products.forEach((products)=>{%>
+
+          <div class="col-6 col-md-4 col-lg-4 col-xl-3 col-xxl-2">
+            <div class="product">
+              <figure class="product-media">
+                <span class="product-label label-new" style="background-color: rgb(112, 185, 40);"><%=products.offerpercentage%>% off</span>
+                <a href="/products/<%= products._id  %>">
+                  <img src="/productimages/<%= products.img[0] %>" alt="Product image" class="product-image">
+                </a>
+
+                <div class="product-action-vertical">
+                  <a onclick="addtowishlist('<%=products._id%>')" class="btn-product-icon btn-wishlist btn-expandable"><span>add to
+                      wishlist</span></a>
+                </div><!-- End .product-action -->
+
+                <div class="product-action action-icon-top">
+                  <a class="btn-product btn-cart" onclick="addToCart('<%-products._id %>','<%=products.stock%>')"><span>add to cart</span></a>
+                  <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
+                  <a href="#" class="btn-product btn-compare" title="Compare"><span>compare</span></a>
+                </div><!-- End .product-action -->
+              </figure><!-- End .product-media -->
+
+              <div class="product-body">
+                <div class="product-cat">
+                  <a href="#" class="text-danger">
+                    <%= products.catogory %>
+                  </a>
+                </div><!-- End .product-cat -->
+                <h3 class="product-title"><a href="">
+                    <%= products.name %>
+                  </a></h3><!-- End .product-title -->
+                <div class="product-price">
+                  <s class="text-danger pr-2">₹<%= products.price %></s><span>₹<%= products.offerprice %></span>
+                </div><!-- End .product-price -->
+                <div class="ratings-container">
+                  <div class="ratings">
+                    <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
+                  </div><!-- End .ratings -->
+                  <span class="ratings-text">( 6 Reviews )</span>
+                </div><!-- End .rating-container -->
+
+              </div><!-- End .product-body -->
+            </div><!-- End .product -->
+          </div><!-- End .col-sm-6 col-lg-4 col-xl-3 -->
+          <% }) %>
+
+
+
+
+
+        </div><!-- End .row -->
+
+        <div class="load-more-container text-center">
+          <a href="#" class="btn btn-outline-darker btn-load-more">More Products <i class="icon-refresh"></i></a>
+        </div><!-- End .load-more-container -->
+      </div><!-- End .products -->
+
+      <div class="sidebar-filter-overlay"></div><!-- End .sidebar-filter-overlay -->
+      <aside class="sidebar-shop sidebar-filter">
+        <div class="sidebar-filter-wrapper">
+          <div class="widget widget-clean">
+            <label><i class="icon-close"></i>Filters</label>
+            <a href="#" class="sidebar-filter-clear">Clean All</a>
+          </div><!-- End .widget -->
+          <div class="widget widget-collapsible">
+            <h3 class="widget-title">
+              <a data-toggle="collapse" href="#widget-1" role="button" aria-expanded="true" aria-controls="widget-1">
+                Category
+              </a>
+            </h3><!-- End .widget-title -->
+
+            <div class="collapse show" id="widget-1">
+              <div class="widget-body">
+                <div class="filter-items filter-items-count">                
+                  <% cataBanner.forEach(element=>{ %>
+                  <!-- <div class="collapse show" id="widget-2">
+                    <div class="widget-body">
+                      <div class="filter-items filter-items-count"> -->
+                        <div class="filter-item">                 
+                          <div class="custom-control custom-radio">
+                            <input type="checkbox" class="custom-control-input"  id="<%= element._id %>" value=<%= element.title %> onclick="check(value,id)">
+                            <label class="custom-control-label" for="<%= element._id %>"><%= element.title %></label>
+                          </div><!-- End .custom-checkbox -->
+                          <span class="item-count"><%= cartCount %></span>
+                        </div><!-- End .filter-item -->
+                      <!-- </div>
+                    </div>
+                  </div> -->
+                  <% }) %>
+                 
+                </div><!-- End .filter-items -->
+              </div><!-- End .widget-body -->
+            </div><!-- End .collapse -->
+          </div><!-- End .widget -->
+
+         
+        </div><!-- End .sidebar-filter-wrapper -->
+      </aside><!-- End .sidebar-filter -->
+    </div><!-- End .container-fluid -->
+    <!-- </div> -->
+  </main><!-- End .main -->
+</section>
+
+
+
+
+<footer class="footer">
+  <div class="footer-middle">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6 col-lg-3">
+          <div class="widget widget-about">
+            <img src="/assets/images/sreehari's eshop.jpg" class="footer-logo" alt="Footer Logo" width="105" height="25">
+            <p>Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate magna eros
+              eu erat. </p>
+
+            <div class="social-icons">
+              <a href="#" class="social-icon" target="_blank" title="Facebook"><i class="icon-facebook-f"></i></a>
+              <a href="#" class="social-icon" target="_blank" title="Twitter"><i class="icon-twitter"></i></a>
+              <a href="#" class="social-icon" target="_blank" title="Instagram"><i class="icon-instagram"></i></a>
+              <a href="#" class="social-icon" target="_blank" title="Youtube"><i class="icon-youtube"></i></a>
+              <a href="#" class="social-icon" target="_blank" title="Pinterest"><i class="icon-pinterest"></i></a>
+            </div><!-- End .soial-icons -->
+          </div><!-- End .widget about-widget -->
+        </div><!-- End .col-sm-6 col-lg-3 -->
+
+        <div class="col-sm-6 col-lg-3">
+          <div class="widget">
+            <h4 class="widget-title">Useful Links</h4><!-- End .widget-title -->
+
+            <ul class="widget-list">
+              <li><a href="about.html">About Molla</a></li>
+              <li><a href="#">How to shop on Molla</a></li>
+              <li><a href="#">FAQ</a></li>
+              <li><a href="contact.html">Contact us</a></li>
+              <li><a href="login.html">Log in</a></li>
+            </ul><!-- End .widget-list -->
+          </div><!-- End .widget -->
+        </div><!-- End .col-sm-6 col-lg-3 -->
+
+        <div class="col-sm-6 col-lg-3">
+          <div class="widget">
+            <h4 class="widget-title">Customer Service</h4><!-- End .widget-title -->
+
+            <ul class="widget-list">
+              <li><a href="#">Payment Methods</a></li>
+              <li><a href="#">Money-back guarantee!</a></li>
+              <li><a href="#">Returns</a></li>
+              <li><a href="#">Shipping</a></li>
+              <li><a href="#">Terms and conditions</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+            </ul><!-- End .widget-list -->
+          </div><!-- End .widget -->
+        </div><!-- End .col-sm-6 col-lg-3 -->
+
+        <div class="col-sm-6 col-lg-3">
+          <div class="widget">
+            <h4 class="widget-title">My Account</h4><!-- End .widget-title -->
+
+            <ul class="widget-list">
+              <li><a href="#">Sign In</a></li>
+              <li><a href="cart.html">View Cart</a></li>
+              <li><a href="#">My Wishlist</a></li>
+              <li><a href="#">Track My Order</a></li>
+              <li><a href="#">Help</a></li>
+            </ul><!-- End .widget-list -->
+          </div><!-- End .widget -->
+        </div><!-- End .col-sm-6 col-lg-3 -->
+      </div><!-- End .row -->
+    </div><!-- End .container -->
+  </div><!-- End .footer-middle -->
+
+  <div class="footer-bottom">
+    <div class="container">
+      <p class="footer-copyright">Copyright © 2019 Molla Store. All Rights Reserved.</p>
+      <!-- End .footer-copyright -->
+      <figure class="footer-payments">
+        <img src="assets/images/payments.png" alt="Payment methods" width="272" height="20">
+      </figure><!-- End .footer-payments -->
+    </div><!-- End .container -->
+  </div><!-- End .footer-bottom -->
+</footer><!-- End .footer -->
+
+<script>
+
+
+
+  function addToCart(proId, stock) {
+    console.log("proid=>", proId, "stock=>", stock);
+    $.ajax({
+      url: '/check-cart-quantity/' + proId,
+      method: 'get',
+      success: (response) => {
+
+        //checking if user login or not
+        if (response.login==false) {
+          console.log(response,'this is my respones');
+          Swal.fire({
+                icon: 'error',
+                 title: 'Oops...',
+                 text: 'Please Login To Continue',
+               })
+        }else{
+                  
+        if (response.status) {
+          if (stock - response.quantity <= 0) {
+          toast2()
+          } else {
+            $.ajax({
+              url: '/add-to-cart/' + proId,
+              method: 'get',
+
+              success: (response) => {
+               
+                if (response.status) {
+                  toast1()
+                  let count = $('#cart-count').html()
+                  console.log(count, "is count");
+                  count = parseInt(count) + 1
+                  $('#cart-count').html(count)
+
+                }
+              }
+            })
+          }
+
+        } else if (response.status == false && stock == 0) {
+         toast2()
+        }
+        //   user exsist but no cart condition
+        else {
+          $.ajax({
+            url: '/add-to-cart/' + proId,
+            method: 'get',
+            success: (response) => {
+              if (response.status) {
+                 toast1()
+                let count = $('#cart-count').html()
+                console.log(count, "is count");
+                count = parseInt(count) + 1
+                $('#cart-count').html(count)
+              }
+            }
+          })
+        }
+      }
+    }
+    })
+
+
+
+
+  }
+ async function toast1()
+  {
+   const Toast=Swal.mixin({
+  toast: true,
+  position: 'bottom',
+  iconColor: 'white',
+  customClass: {
+    popup: 'colored-toast'
+  },
+  showConfirmButton: false,
+  timer: 1500,
+  timerProgressBar: true
+})
+await Toast.fire({
+  icon: 'success',
+  title: 'ITEM ADDED TO CART'
+})
+  }
+
+  async function toast2(){
+    const Toast= Swal.mixin({
+  toast: true,
+  position: 'bottom',
+  iconColor: 'white',
+  customClass: {
+    popup: 'colored-toast'
+  },
+  showConfirmButton: false,
+  timer: 1500,
+  timerProgressBar: true
+})
+await Toast.fire({
+  icon: 'error',
+  title: 'ITEM OUT OF STOCK'
+})
+
+  }
+
+  function addtowishlist(proId){
+
+  $.ajax({
+    url:'/add-wishlist/'+proId,
+    method:'post',
+   success:(response)=>{
+    if(response.status=='success')
+    {
+      Swal.fire({
+  icon: 'success',
+  title: 'Item Added To wishlist ',
+  showConfirmButton: false,
+  timer: 1500
+})
+    }else{
+      Swal.fire('Item already added')
+    }
+   }
+  })
+  }
+
+
+  function check(value,id){
+    console.log(value);
+    var checkboxes=document.getElementById(id)
+    console.log(checkboxes);
+    var checkboxescheck=[]
+    // console.log(id.length);
+    // for (var i=0;i<1;i++)
+    // {
+      // console.log(i);
+      let j=0
+      let v
+      if(checkboxes.checked )
+      {
+    //     console.log('shop/catogory/');
+    //     console.log(checkboxes)
+        // checkboxescheck.push(value)
+        // console.log(checkboxescheck.length);
+        // console.log(j++);
+        //  v=value
+        v=value.toUpperCase()
+        console.log('/shop?category='+v);
+        // console.log(v);
+        $.ajax({
+    url:'/shop?catogory='+v,
+    method:'get',
+   success:(response)=>{
+    console.log('good');
+   }
+  })
+  }
+      }
+  // }
+ 
+
+
+</script>

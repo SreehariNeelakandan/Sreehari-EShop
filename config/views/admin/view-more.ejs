@@ -1,0 +1,345 @@
+<style>
+    body {
+      background-image: url('/images/page-header-bg.jpg');
+    }
+  
+  
+    .btn {
+      min-width: 60px;
+      color: white;
+    }
+  
+    h6 {
+      padding-right: 50px;
+  
+    }
+  
+    .line {
+      width: 100.5%;
+      height: 1px;
+      background-color: #FCB941;
+    }
+  
+    .nav {
+      background-image: url('/images/page-header-bg.jpg');
+    }
+  
+    .fas.fa-angle-up {
+      display: none;
+    }
+  
+  
+  
+    /* Main */
+  
+    .mainDiv {
+      height: auto;
+      width: 710px;
+      border: 1px solid #a1a1a1;
+      border-radius: 5px;
+    }
+  
+    .addrDiv {
+      height: auto;
+      border: 1px solid #a1a1a1;
+      border-radius: 5px;
+  
+    }
+    a {
+  text-decoration: none;
+  display: inline-block;
+  padding: 15px 16px;
+}
+
+a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.previous {
+  background-color: #f1f1f1;
+  color: black;
+}
+
+.next {
+  background-color: #04AA6D;
+  color: white;
+}
+
+.round {
+  border-radius: 50%;
+}
+  </style>
+  <section>
+  
+  
+  
+    <div class="container-fluid ">
+      <div class="row">
+        <div class="col-md-12">
+          <a href="/admin/orders" class="previous">&laquo; Previous</a>
+
+          <div class="mainbar ">
+            <section id="page-top">
+              <!-- Page Wrapper -->
+              <div id="wrapper">
+                <!-- Content Wrapper -->
+                <div id="content-wrapper" class="d-flex flex-column">
+                  <!-- Main Content -->
+                  <div id="content">
+                    <!-- Begin Page Content -->
+                    <div class="container-fluid">
+                      <!-- DataTales Example -->
+                      <div class="card shadow mt-5 mb-4"
+                        style="border: 5px solid #ebebeb; background-image: url('/images/page-header-bg.jpg');">
+                        <div class="card-body mt-4">
+                          <% allOrders?.forEach((items)=>{ %>
+
+
+
+                      <% const deliveryStatus=(data)=>{
+                        if(data==1){
+                            return `${"pending"}`
+                        }else if(data==2){
+                            return `${"dispatched"}`
+                        }else if(data==3){
+                            return `${"shipped"}`
+                        }else{
+                            return `${"delivered"}`
+                        }
+                      } %> 
+
+<div class="container">
+    <div class="row">
+      <div class="col-12">
+        <% const dataToReadable=(date)=>{
+
+          const date_ = new Date(date);
+          let month = ['Jan','Feb','March','April','May','June','July','Aug','Sept','oct','Nov','Dec']
+          let dd = date_.getDate();
+          let mm = date_.getMonth();
+          let monthText = month[mm]
+          let yyyy = date_.getFullYear();
+
+          return `${isNaN(dd)?'00':dd}-${monthText}-${isNaN(yyyy)?'0000':yyyy}`;
+          }; %>
+
+
+
+
+
+
+      </div>
+    </div>
+
+
+    <div class="row mt-1">
+
+      <div class="row mt-5 ml-1">
+
+        <div class="mx-3">
+          <h6 style="font-weight: 400; font-size: small; color: #585858;">Ordered :
+            <%=dataToReadable(items.orders.createdAt) %> <span
+                class="px-4 text-light">|</span>Order Id :<%=items.orders._id %>
+          </h6>
+        </div>
+
+        <div class="col-12 mainDiv">
+
+          <div class="row mt-2 p-3 mb-2">
+
+
+            <div class="col-6 mx-5" style="float: left;">
+              <div class="d-flex">
+                <div class="mx-5 h5">
+                  <%= items.orders.productDetails.productsName %>
+                </div> <span style="margin-top: 6px;" class="mx-3">
+
+                </span>
+              </div>
+              <div class="d-flex">
+
+                <img class="mx-5 mt-2" style="width: 100px; height:100px; object-fit:contain"
+                  src="/productimages/<%=items.orders.productDetails.img[0] %>"
+                  alt="  %> ">
+                <div class="d-flex-column">
+                  <div class="mt-2" style="font-size: large;"><span class="px-2"
+                      style="color: #fb7e00; font-weight: 500;">Rs:<%=
+                        items.orders.productDetails.offerprice %> </span> </div>
+                  <div class="text-center h6"><span>Qty:<%= items.orders.productDetails.quantity
+                        %> </span></div>
+                  <% if(items.orders.productDetails.status){ %>
+                    <div class="text-center text-white mt-1 "
+                      style="padding-top: 3px; width: 100px;height:23px; border-radius: 10px; background-color: rgb(109, 176, 85); font-size: small; font-weight: 600;">
+                      Order Placed
+                    </div>
+                    <% }else{ %>
+                      <div class="text-center text-white mt-1"
+                        style="padding-top: 3px; width: 100px;height:23px; border-radius: 10px; background-color: rgb(205, 66, 66); font-size: small; font-weight: 600;">
+                        Cancelled
+                      </div>
+                      <% } %>
+                </div>
+                
+                <div class="h6" style="padding-left: 150px; margin-top: 50px;">
+                  <% if(items.orders?.productDetails.status){ %>
+                    <select onchange="change(this,'<%=items.orders._id%>','<%=items.orders.productDetails._id%>')" class="form-select" aria-label="Default select example">
+                      <%if(items.orders.productDetails.shippingStatus<=3){%>
+                       <option selected disabled hidden ><%= deliveryStatus(items.orders.productDetails.shippingStatus) %> </option>
+                        <option value="1" >pending</option>
+                        <option value="2" >dispatched</option>
+                        <option value="3">shipped</option>
+                        <%}%>
+                        <option value="4">Delivered</option>
+                      </select>
+                      <%}%>
+                </div>
+
+                <div class="col-5 ">
+                  <div class="ml-5">
+                    <%if(items.orders.productDetails.shippingStatus<=3){%>
+                    <% if(items.orders?.productDetails.status){ %>
+                      <button
+                        onclick="cancelOrder('<%= items.orders._id %>','<%= items.orders.productDetails._id %>')"
+                        class="cancel btn text-white  ml-5 mt-4"
+                        style="position: absolute; border-radius: 10px; width: 140px; background-color: rgb(234, 34, 4);">Cancel
+                        Order</button>
+                        <%}%>
+                      <% }else{ %>
+                        <button class="cancel btn text-white bg-danger ml-5 mt-4"
+                          style="position: absolute; border-radius: 10px; width: 140px; "
+                          disabled>Cancel Order</button>
+                        <% } %>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+
+  </div>
+  <% }) %>
+
+
+    <div class="row mt-3">
+      <div class="col-12">
+        <div class="row addrDiv pb-2">
+          <div class="col-4  " style="float: left;">
+            <h6 class="mt-2 mx-4">Shipping address</h6>
+            <p class="mx-4 mt-1">
+             <b><%=allOrders[0].orders?.shippingAddress.street %></b> 
+                <p class="mx-4 ">
+                 <b> <%=allOrders[0].orders?.shippingAddress.city %></b>
+                </p>
+                <p class="mx-4 ">
+                  <b><%=allOrders[0].orders?.shippingAddress.pincode %></b>    
+                </p>
+                <p class="mx-4 ">
+                 <b> <%=allOrders[0].orders?.shippingAddress.phone %></b>
+                </p>
+                <p class="mx-4 ">
+                  <b><%=allOrders[0].orders?.shippingAddress.email %></b>
+                </p>
+                <span style="font-weight: 500;"></span> <br>
+            </p>
+
+          </div>
+
+          <div class="col-4 ">
+            <h6 class="mt-2 mx-4 ">Payment Method</h6>
+
+            <p class="mx-4 mt-1  "><b>
+                <%= allOrders[0].orders.paymentMethod %>
+              </b> </p>
+            <div>
+              <h6 class="mt-2 mx-4 ">Payment Status</h6>
+              <% if(allOrders[0].orders.paymentStatus==0){ %>
+                <p class="mx-4 mt-1 text-danger "><b>PENDING</b> </p>
+                <% }else{ %>
+                  <p class="mx-4 mt-1 text-success"><b>SUCCESS</b> </p>
+                  <% } %>
+            </div>
+          </div>
+          <div class="col-4">
+
+            <h6 class="mt-2 mx-4 ">Total Price</h6>
+            <span class="mx-4 mt-2 "
+              style="color: #fb6400; font-size: x-large !important; font-weight: 500; ">
+              <%=allOrders[0].orders.totalPrice %>
+            </span>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<a class="scroll-to-top rounded" href="#page-top">
+<i class="fas fa-angle-up"></i>
+</a>
+
+
+
+</section>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+
+
+<script>
+function cancelOrder(orderId, proId) {
+
+console.log(orderId, proId);
+
+
+$.ajax({
+url: '/cancelOrder',
+data: {
+orderId: orderId,
+productId: proId,
+},
+method: 'put',
+beforeSend: () => {
+return confirm('Are you sure want to cancel this order?')
+},
+success: (response) => {
+location.reload()
+}
+})
+}
+
+function change(value,orderid,proid,) {
+    console.log(value.value,orderid,proid);
+    $.ajax({
+        url:'/admin/shippingStatus',
+        data:{
+        proId:proid,
+        orderId:orderid,
+        value:value.value
+        },
+        method:'put',
+      success:(response)=>{
+        location.reload()
+      }
+    })
+}
+</script>

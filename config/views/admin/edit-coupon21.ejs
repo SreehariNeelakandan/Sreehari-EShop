@@ -1,0 +1,73 @@
+<div class="container">
+    <div class="row">
+  
+  
+      <div class="col-md-6 mt-3">
+  
+  
+  
+        <form  action="/admin/edit-coupon/<%= coupon._id %>" method="post" id="myform" enctype="multipart/form-data">
+            <div class="form-group">
+                <label class="col-sm-3 col-form-label">Coupon Code</label>
+                <div class="col-sm-9">
+                  <div class="input-group ">
+                    <input type="text" id="couponName" name="couponName" value="<%= coupon.couponName %>" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <!-- <div class="input-group-append">
+                      <button class="btn btn-outline-success" onclick="generateCode()" type="button">Generate Code</button>
+                    </div> -->
+                  </div>
+                </div>
+          </div>
+  
+         
+  
+          <div class="form-group">
+            <p class="text-danger"></p>
+            <label for="Name">Expiry</label>
+            <input type="date"   id="expiry" name="expiry" value="<%= coupon.expiry %>" class="form-control" cols="45" rows="5" ></input>
+        </div>
+          
+          <div class="form-group">
+            <p class="text-danger"></p>
+            <label for="Name">Min Purchase</label>
+            <input id="minPurchase" type="text" class="form-control" name="minPurchase" value="<%=coupon.minPurchase  %>"/>
+        </div>
+  
+          <div class="form-group">
+            <p class="text-danger"></p>
+            <label for="Name">Discount</label>
+            <input id="discountPercentage" type="number" class="form-control"  name="discountPercentage" value="<%= coupon.discountPercentage %>"/>
+        </div>
+  
+          <div class="form-group">
+            <p class="text-danger"></p>
+            <label for="Name">Max Discount</label>
+            <input id="maxDiscountValue" type="text" class="form-control" name="maxDiscountValue" value="<%= coupon.maxDiscountValue %>" />
+        </div>
+  
+          <div class="form-group">
+            <p class="text-danger"></p>
+            <label for="description">Description</label>
+            <textarea  id="description" name="description"  class="form-control"  cols="45" rows="5" value=""><%=coupon.description %></textarea>
+        </div>
+  
+
+  
+    
+  
+  
+          <button type="button" onclick="validate()" class="btn btn-primary mt-3" value="Upload">Upload</button>
+          <a href="/admin/coupon" class="btn btn-light mt-3">cancel</a>
+        </form>
+  
+  
+  
+  
+  
+        <script>
+
+          function validate() {
+              document.getElementById('myform').submit()
+           
+          }
+        </script>
