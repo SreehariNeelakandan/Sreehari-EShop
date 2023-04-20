@@ -53,7 +53,7 @@ module.exports = {
     console.log(cataBanner);
     // console.log(req?.session?.user?._id,"logdincase");
     if (user) {
-      let cartCount = await userHelpers.getCartCount(req.session.user._id);
+      let cartCount = await userHelpers.getCartCount(req?.session?.user?._id);
 
       res.render("index", { nav: true, user, cartCount, product, mainBanner,cataBanner });
     } else {
@@ -163,7 +163,7 @@ module.exports = {
     let cataBanner= await productHelpers.getCataBanner()
 
     productHelpers.getAllproducts(req.query).then(async (products) => {
-      let cartCount = await userHelpers.getCartCount(req.session.user._id);
+      let cartCount = await userHelpers.getCartCount(req?.session?.user?._id);
       console.log(cartCount,'d');
       res.render("users/user-shop", {
         products,
@@ -216,7 +216,7 @@ module.exports = {
 
   changeQuantity: (req, res) => {
     userHelpers.changeProductQuantity(req.body).then(async (response) => {
-      response.total = await userHelpers.getTotalAmmount(req.session.user._id);
+      response.total = await userHelpers.getTotalAmmount(req?.session?.user?._id);
       // console.log(response.total, "mmmmmmmmmm");
 
       res.json(response);
@@ -250,7 +250,7 @@ module.exports = {
     });
   },
   checkoutPost: async (req, res) => {
-    let totalAmmount = await userHelpers.getTotalAmmount(req.session.user._id);
+    let totalAmmount = await userHelpers.getTotalAmmount(req?.session?.user?._id);
     let total = totalAmmount?.offertotal;
     total = total - couponAmount;
     // console.log(total, "tatatatatatata");
@@ -300,7 +300,7 @@ module.exports = {
   },
   cancelOrder: (req, res) => {
     // console.log(req.body, "naa body");
-    userHelpers.cancelOrder(req.body, req.session.user._id).then((response) => {
+    userHelpers.cancelOrder(req.body, req?.session?.user?._id).then((response) => {
       res.json(response);
     });
   },
@@ -342,7 +342,7 @@ module.exports = {
     userHelpers
       .verifyPayment(req.body)
       .then(() => {
-        userHelpers.changePaymentStatus(req.body["order[receipt]"],req.session.user._id).then(() => {
+        userHelpers.changePaymentStatus(req.body["order[receipt]"],req?.session?.user?._id).then(() => {
           // console.log("payment successfull");
           res.json({ status: true });
         });
@@ -364,13 +364,13 @@ module.exports = {
     });
   },
   paypalSuccess: async (req, res) => {
-    const orderDetails = await db.order.find({ userId: req.session.user._id });
+    const orderDetails = await db.order.find({ userId: req?.session?.user?._id });
     let orders = orderDetails[0].orders.slice().reverse();
     let orderId1 = orders[0]._id;
  
     let orderId = "" + orderId1;
    
-    userHelpers.changePaymentStatus(orderId,req.session.user._id).then((data) => {
+    userHelpers.changePaymentStatus(orderId,req?.session?.user?._id).then((data) => {
       res.json({ status: true });
     });
   },
@@ -406,7 +406,7 @@ module.exports = {
   },
   addAddress: (req, res) => {
     // console.log(req.body, "jgghghj");
-    userId = req.session.user._id;
+    userId = req?.session?.user?._id;
     userHelpers.addressAdd(req.body, userId).then((response) => {
       res.json(response);
     });
@@ -415,13 +415,13 @@ module.exports = {
   checkCartQuantity: (req, res) => {
     // console.log(req.params.id, "producttttttt");
     userHelpers
-      .checkCartQuantity(req.session.user._id, req.params.id)
+      .checkCartQuantity(req?.session?.user?._id, req.params.id)
       .then((quantity) => {
         res.send(quantity);
       });
   },
   editAddress: (req, res) => {
-    let userId = req.session.user._id;
+    let userId = req?.session?.user?._id;
     userHelpers.updateAddress(req.body, userId).then(() => {
       res.send({ status: true });
     });
@@ -430,7 +430,7 @@ module.exports = {
   changeUserProfile: async (req, res) => {
     // console.log(req.body, "first body");
 
-    let user = await db.user.findOne({ _id: req.session.user._id });
+    let user = await db.user.findOne({ _id: req?.session?.user?._id });
 
     userHelpers.editProfile(req.body, user).then((response) => {
       // console.log("response", response);
@@ -455,7 +455,7 @@ module.exports = {
   returnOrder: (req, res) => {
     // console.log(req.body, "my body");
     userHelpers
-      .returnProduct(req.body, req.session.user._id)
+      .returnProduct(req.body, req?.session?.user?._id)
       .then((response) => {
         res.send(response);
       });
@@ -464,12 +464,12 @@ module.exports = {
   applyCoupon: async (req, res) => {
     req.session.coupon = req.body._id;
     let couponId = req.body._id;
-    let totalAmmount = await userHelpers.getTotalAmmount(req.session.user._id);
+    let totalAmmount = await userHelpers.getTotalAmmount(req?.session?.user?._id);
     let total = totalAmmount?.offertotal;
 
     couponHelpers.getCoupon(couponId).then((data) => {
       if (total >= data.minPurchase) {
-        couponHelpers.addCouponToUser(req.session.user._id, ObjectId(req.body._id), false).then((d) => {
+        couponHelpers.addCouponToUser(req?.session?.user?._id, ObjectId(req.body._id), false).then((d) => {
             if (
               (total * data.discountPercentage) / 100 <=
               data.maxDiscountValue
@@ -539,7 +539,7 @@ module.exports = {
     console.log(req.body,"body");
     // let user=await db.user.findOne({_id:req.session.user._id})
     console.log(req.session.user._id,"new pass user");
-    userHelpers.changePassword(req.body,req.session.user._id).then((response)=>{
+    userHelpers.changePassword(req.body,req?.session?.user?._id).then((response)=>{
       if(response.status){
         console.log("succ");
         res.json({ status: true });
