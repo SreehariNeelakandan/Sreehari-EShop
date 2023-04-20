@@ -43,7 +43,7 @@ module.exports = {
   doSignUp: (userData) => {
     return new Promise(async (resolve, reject) => {
       try {
-        // await User.findOne({ "$or": [ { email: email }, { phone: phone} ] })
+        // await User.findOne({ "$or": [ { email: email }, { phone: phone} ] })git push -u origin main
         db.user
           .find({ $or: [{ email: userData.email }, { phone: userData.phone }] })
           .then(async (data) => {
