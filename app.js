@@ -38,7 +38,7 @@ app.use(
     secret: "process.env.SECRET_KEY",
     resave: false,
     store: new mongoDbSession({
-      uri: "mongodb://127.0.0.1:27017/cycle",
+      uri: process.env.MONGO_URL,
       collection: "session",
     }),
     cookie: {
